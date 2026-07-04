@@ -1,0 +1,552 @@
+\documentclass{article}
+\usepackage{physics}
+\usepackage{mathrsfs}
+\usepackage{cmap}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{indentfirst, setspace}
+\usepackage{amsfonts,amssymb}
+\usepackage{amsmath,amsthm}
+\setlength{\parindent}{0.75cm}
+
+% Кодировки и языки
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+
+% Математика
+\usepackage{amsmath,amssymb,amsfonts}
+
+% Графика и TikZ
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{arrows.meta, shapes, positioning, decorations.pathmorphing, patterns, decorations.pathreplacing}
+
+% Оформление оглавления, подписей, шрифта
+\usepackage{tocloft}
+\usepackage{caption}
+\usepackage{tempora}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{indentfirst}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{tabularx}
+\usepackage{wrapfig}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{float}
+
+% Настройки списков
+\setlist{nosep}
+\setlist[itemize]{leftmargin=1.25cm, itemindent=0.65cm}
+\setlist[enumerate]{leftmargin=1.25cm, itemindent=0.55cm}
+
+\usepackage[
+	a4paper,
+	left=30mm,
+	right=15mm,
+	top=20mm,
+	bottom=20mm,
+	]{geometry}
+	
+% Параметры страницы
+\geometry{left=30mm,right=10mm,top=20mm,bottom=20mm}
+\onehalfspacing
+\linespread{1.3}
+\parindent=1.25cm
+
+% Нумерация и вид списков
+\renewcommand{\theenumi}{\arabic{enumi}}
+\renewcommand{\labelenumi}{\arabic{enumi})}
+\renewcommand{\theenumii}{.\arabic{enumii}}
+\renewcommand{\labelenumii}{\asbuk{enumii})}
+\renewcommand{\theenumiii}{.\arabic{enumiii}}
+\renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.}
+
+% Подписи к рисункам и таблицам
+\addto\captionsrussian{\renewcommand{\figurename}{Рисунок}}
+\DeclareCaptionLabelSeparator{dash}{~---~}
+\captionsetup{labelsep=dash}
+\captionsetup[figure]{justification=centering,labelsep=dash}
+\captionsetup[table]{labelsep=dash,justification=raggedright,singlelinecheck=off}
+
+% Путь к картинкам
+\graphicspath{{images/}}
+
+% Маркер для itemize
+\def\labelitemi{---}
+
+\frenchspacing
+
+\begin{document}
+
+\selectlanguage{russian}
+\fontsize{14}{16}\selectfont
+
+\begin{titlepage}
+	\begin{flushleft}
+		{\Large\textbf{Министерство образования и науки РФ}}
+		
+		\vspace{1cm}
+		
+		{\Large\textbf{Московский государственный технический университет имени Н.Э. Баумана}}
+		
+		\vspace{1cm}
+		
+		{\Large\textbf{Факультет <<Фундаментальные науки>>}}
+		
+		\vspace{1cm}
+		
+		{\Large\textbf{Кафедра <<Теоретическая механика>> имени профессора\\Н.Е. Жуковского}}
+		
+		\vspace{3cm}
+		
+		\textbf{\Large Домашнее задание №\underline{2}}
+		
+		\vspace{0.4cm}
+		
+		\underline{Общие теоремы динамики}\\[-1mm]
+		
+		{\normalsize \textit{Тема домашнего задания}}
+		
+		\vspace{1cm}
+		
+		\begin{tabular}{@{} p{2cm} p{3cm} @{}}
+			\textbf{Вариант} & \underline{14} \tabularnewline[4mm]
+			\textbf{Группа} & \underline{ФН12-41Б}
+		\end{tabular}
+		
+		\vspace{2cm}
+		
+		\begin{tabular}{@{} p{3.8cm} p{5.4cm} p{2.5cm} p{3cm} @{}}
+			\textbf{Студент} & \underline{Михайлов А.К.} & \hrulefill & \hrulefill \\[-1mm]
+			
+			& {\normalsize \textit{Фамилия, инициалы}} & {\normalsize \textit{подпись}} & {\normalsize \textit{дата}} \tabularnewline[6mm]
+			
+			\textbf{Преподаватель} & \underline{Стихно К.А.} & & \\[-1mm]
+			
+			& {\normalsize \textit{Фамилия, инициалы}} & &
+		\end{tabular}
+		
+		\vfill
+		
+		\textbf{\textit{Москва, 20\underline{26} год}}
+	\end{flushleft}
+\end{titlepage}
+
+\hspace{-1.3cm}
+\begin{minipage}{0.1\textwidth}
+\centering
+\begin{tikzpicture}
+	
+	\coordinate (O) at (0, 0);
+	\coordinate (C) at (-4, -1);
+	
+	\node[above right] at (O) {$O$};
+	\node[above left] at (C) {$C$};
+	\node[] at (-0.03, 3.05) {$1$};
+	\node[] at (2.4, -0.75) {$2$};
+	\node[] at (-3.12, 0.45) {$3$};
+	\node[] at (3.4, 2.6) {$\vec{F}$};
+	\node[] at (-3.4, 2.6) {$S$};
+	\node[] at (-2.45, 3.05) {$A$};
+	\node[] at (2.45, 3.05) {$B$};
+	\node[] at (-3.7, -2.5) {$\beta$};
+	
+	\draw[-latex, ultra thick] (-3.8, 2.2) -- (-3, 2.2);
+	\draw[-latex, ultra thick] (3, 2.2) -- (3.8, 2.2);
+	\draw[thick] (-3.8, 1.9) -- (-3.8, 2.5);
+	
+	\draw[thick] (0.1, 0) -- (0.25, -0.45);
+	\draw[thick] (-0.1, 0) -- (-0.25, -0.45);
+	\draw[thick] (-0.4, -0.45) -- (0.4, -0.45);
+	\draw[dash dot] (0, 2) -- (0, -2);
+	\draw[dash dot] (-2, 0) -- (2, 0);
+	\draw[thick] (-0.45, 0.894) -- (-3.96, -0.96);
+	\draw[dash dot] (-5, -1) -- (-3, -1);
+	\draw[dash dot] (-4, -2) -- (-4, 0);
+	
+	\draw[thick] (-2.8, 2.5) -- (-2.8, 2.8);
+	\draw[thick] (-2, 2.5) -- (-2, 2.8);
+	\draw[thick] (-2.8, 2.512) -- (-2, 2.512);
+	\fill[pattern=north east lines] (-2.8, 2.512) rectangle (-2, 2.6);
+	
+	\draw[thick] (2.8, 2.5) -- (2.8, 2.8);
+	\draw[thick] (2, 2.5) -- (2, 2.8);
+	\draw[thick] (2.8, 2.512) -- (2, 2.512);
+	\fill[pattern=north east lines] (2.8, 2.512) rectangle (2, 2.6);
+	
+	\draw[thick] (2.8, 1.9) -- (2.8, 1.6);
+	\draw[thick] (2, 1.9) -- (2, 1.6);
+	\draw[thick] (2.8, 1.888) -- (2, 1.888);
+	\fill[pattern=north east lines] (2.8, 1.888) rectangle (2, 1.8);
+	
+	\draw[thick] (-2.8, 1.9) -- (-2.8, 1.6);
+	\draw[thick] (-2, 1.9) -- (-2, 1.6);
+	\draw[thick] (-2.8, 1.888) -- (-2, 1.888);
+	\fill[pattern=north east lines] (-2.8, 1.888) rectangle (-2, 1.8);
+	
+	\draw[thick] (-3, 2) rectangle (3, 2.4);
+	\fill[pattern=north east lines] (-0.4, -0.55) rectangle (0.4, -0.45);
+	\fill[pattern=north east lines] (-3.9, 1.9) rectangle (-3.8, 2.5);
+
+	\draw[thick] (O) circle (0.1);
+	\draw[thick] (O) circle (1);
+	\draw[thick] (O) circle (2);
+	\draw[thick] (C) circle (0.05);
+	\draw[thick] (C) circle (1);
+	
+	\draw[] (-0.7, 2.3) -- (-0.2, 2.8);
+	\draw[] (-0.2, 2.8) -- (0.2, 2.8);
+	
+	\draw[] (1.7, -0.5) -- (2.2, -1);
+	\draw[] (2.2, -1) -- (2.6, -1);
+	
+	\draw[] (-3.8, -0.3) -- (-3.3, 0.2);
+	\draw[] (-3.3, 0.2) -- (-2.9, 0.2);
+	
+	\coordinate (D1) at (-5.3,-2.8);
+	\coordinate (D2) at (-2.3,-1.3);
+	\coordinate (D3) at (-2.1,-1.3);
+	\coordinate (D4) at (-5.1,-2.8);
+	\draw[thick, fill=white] (D1) -- (D2) -- (D3) -- (D4) -- cycle;
+	\fill[pattern=north east lines] (D1) -- (D2) -- (D3) -- (D4) -- cycle;
+	
+	\draw[thick] (D1) -- (-1.8, -2.8);
+	
+	\draw[to-to, thick] (-4,-2.8) arc[start angle=-20, end angle=40, radius=0.5];
+\end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+\par
+\vspace{5pt}
+\textbf{Условие задачи:}
+В механической системе рейка 1 массой $m_1$ движется в горизонтальных гладких направляющих под действием постоянной силы $F$. Рейка находится в зацеплении с двухступенчатой шестернёй-барабаном радиуса $R$ барабана 3 радиусом $r$. Радиус инерции шестерни-барабана 3 относительно их оси вращения равен $\rho$, $m_2$ - их общая масса.
+\end{minipage}
+\par
+\vspace{5pt}
+\noindent
+ К центру однородного катка 3 массой $m_3$ прикреплена нерастяжимая нить, которая наматывается на барабан. Каток 3 катится без скольжения по неподвижной наклонной плоскости с углом наклона $\beta$. К шестерне 3 приложена пара сил с моментом $M_{OZ} = -\alpha \omega^2$ ($\alpha = \text{const} > 0$). Массой нити и трением качения пренебречь. В начальный момент система находилась в покое. \par 
+ \textbf{Определить:} 1) закон движения рейки 1; 2) натяжение нити в начале движения. В расчетах принять: $m_1 = 1$ кг, $m_2 = 2m_1$, $m_3 = 4m_1$, $F = 2m_1g$, $R = 2r$, $\rho = 0,6R$, $R = 0,2$ м, $\beta = 30^\circ$, $\alpha = 3,22$ Н$\cdot$с$\cdot$м.
+ \vspace{0.3cm}
+\section*{Дано}
+\vspace{-0.5cm}
+\begin{itemize}
+	\item $m_1 = 1$ кг
+	\item $m_2 = 2m_1 = 2$ кг
+	\item $m_3 = 4m_1 = 4$ кг
+	\item $\beta = 30^\circ$
+	\item $\alpha = 3,22$ Н$\cdot$с$\cdot$м
+	\item $M_{Oz} = -\alpha \omega_0$
+	\item $r = 0,1$ м
+	\item $R = 2r = 0,2$ м
+	\item $\rho = 0,6R$
+	\item $F = 2m_1g = 19,6$ Н (при $g = 9,8$ м/с$^2$)
+	\item Н.У.: при $t = 0$ $S = 0$ и $\dot{S} = 0$
+\end{itemize}
+ \vspace{0.1cm}
+\section*{Определить}
+\vspace{-0.4cm}
+\begin{itemize}
+	\item $S(t)$
+	\item $T_0$
+\end{itemize}
+\newpage
+\section*{Решение}
+\hspace{1.7cm}
+\begin{tikzpicture}[]
+	
+	\coordinate (O) at (0, 0);
+	\coordinate (C) at (-4, -1);
+	
+	\node[above right, xshift=-2pt, yshift=-2pt] at (O) {$O$};
+	%\node[above left] at (C) {$C$};
+	\node[] at (3.4, 2.6) {$\vec{F}$};
+	\node[] at (-3.4, 2.6) {$S$};
+	\node[] at (-3.7, -2.5) {$\beta$};
+	
+	\draw[-latex, ultra thick] (-4, 2.2) -- (-3, 2.2);
+	\draw[-latex, ultra thick] (3, 2.2) -- (4, 2.2);
+	\draw[-latex, ultra thick] (0, 2.2) -- (1, 2.2);
+	\draw[-latex, ultra thick] (0, 2.2) -- (2, 2.2);
+	\draw[-latex, ultra thick] (0, 2.2) -- (0, 1.2);
+	\draw[-latex, ultra thick] (O) -- (0, -0.9);
+	\draw[-latex, ultra thick] (C) -- (-4, -1.9);
+	\draw[-latex, ultra thick] (-3.55, -1.9) -- (-4.4, -0.2);
+	\draw[-latex, ultra thick] (-3.55, -1.9) -- (-4.7, -2.49);
+	\draw[-latex, ultra thick] (C) -- (-3.15, -0.548);
+	\draw[-latex, ultra thick] (C) -- (-2.5, -0.202);
+	\draw[-latex, ultra thick] (-0.45, 0.894) -- (-1.5, 0.335);
+	
+	\draw[thick] (-4, 1.9) -- (-4, 2.5);
+	%\draw[dash dot] (0, 2) -- (0, -2);
+	%\draw[dash dot] (-2, 0) -- (2, 0);
+	%\draw[dash dot] (-5, -1) -- (-3, -1);
+	%\draw[dash dot] (-4, -2) -- (-4, 0);
+	\draw[dashed] (-0.45, 0.894) -- (C);
+	
+	\draw[thick] (-3, 2) rectangle (3, 2.4);
+	\fill[pattern=north east lines] (-4.1, 1.9) rectangle (-4, 2.5);
+	
+	
+	\draw[thick] (O) circle (1);
+	\draw[thick] (O) circle (2);
+	\draw[thick] (C) circle (1);
+	\fill (C) circle (0.06);
+	\fill (O) circle (0.06);
+	\fill (0, 2.2) circle (0.06);
+	\fill (-3.55, -1.9) circle (0.06);
+	\fill (-0.45, 0.894) circle (0.06);
+	
+	\coordinate (D1) at (-5.32,-2.8);
+	\coordinate (D2) at (-2.32,-1.3);
+	\draw[thick, fill=white] (D1) -- (D2);
+	\draw[thick] (D1) -- (-1.8, -2.8);
+	
+	\draw[thick] (-4,-2.8) arc[start angle=-20, end angle=53, radius=0.5];
+	\draw[-latex, ultra thick] (1.2, 0) arc[start angle=0, end angle=50, radius=1.2];
+	\draw[-latex, ultra thick] (2.2, 0) arc[start angle=0, end angle=-30, radius=2.2];
+	\draw[-latex, ultra thick] (0, -2.2) arc[start angle=-90, end angle=-120, radius=2.2];
+	\draw[-latex, ultra thick] (-4.6, -2) arc[start angle=-120, end angle=-170, radius=1];
+	\draw[-latex, ultra thick] (-5.2, -1) arc[start angle=-180, end angle=-223, radius=1.2];
+	
+	\node[left, yshift=-3pt] at (C) {$C$};
+	\node[left, font=\small, xshift=2pt, yshift=-2pt] at (-4, -1.5) {$m_3\vec{g}$};
+	\node[right, font=\small, xshift=-1pt, yshift=-1pt] at (0, -0.5) {$m_2\vec{g}$};
+	\node[right, font=\small, xshift=-1pt, yshift=-1pt] at (0, 1.5) {$m_1\vec{g}$};
+	\node[right, xshift=-3pt] at (-1.4, 0.9) {$\vec{T}'$};
+	\node[xshift=2pt] at (-3, 0) {$\vec{T}$};
+	\node[xshift=2pt] at (-4, -0.35) {$\vec{N}$};
+	\node[xshift=2pt] at (-3.5, -1) {$\vec{v}_c$};
+	\node[font=\small] at (1.45, 0.8) {$\vec{M}_{Oz}$};
+	\node[] at (0.7, 2.8) {$d\vec{S}$};
+	\node[] at (1.9, 2.73) {$\vec{v}_1$};
+	\node[] at (2.65, -0.7) {$d\varphi_2$};
+	\node[] at (-5.4, -1.75) {$d\varphi_3$};
+	\node[] at (-0.7, -2.45) {$\omega_2$};
+	\node[] at (-5.4, -0.2) {$\omega_3$};
+	\node[font=\small] at (-4.8, -2.2) {$\vec{F}_{\text{тр}}$};
+	
+\end{tikzpicture}
+
+В данной механической системе ровно 1 степень свободы, так как все её элементы жестко связаны, следовательно её движение описывается единственным дифференциальным уравнением. Требуется найти уравнение движения рейки, поэтому в качестве независимого параметра примем перемещение рейки $S$ --- оно однозначно определяет положение всех остальных элементов системы. \par
+1) Применим к системе теорему об изменении кинетической энергии. Поскольку работа внутренних сил равна нулю, теорема принимает следующий вид:
+\begin{equation}
+	dT = \sum dA(F_k^{(e)})
+\end{equation}
+\par
+Энергия системы складывается из кинетической энергии поступательного движения рейки, вращательного движения барабана и плоскопараллельного движения катка, поэтому принимает следующий вид:
+\begin{equation}
+	T = \frac{m_1 \dot{S}^2}{2} + \frac{J_{Oz} \omega_2^2}{2} + \frac{m_3 v_c^2}{2} + \frac{J_{Cz} \omega_3^2}{2},
+\end{equation}
+где $J_{Cz}$ и $J_{Oz}$ --- моменты инерции. Выразим их:
+\begin{equation*}
+	J_{Oz} = m_2\rho^2, \,\,\, J_{Cz} = \frac{m_3r^2}{2}
+\end{equation*}
+\par
+Далее выразим остальные кинематические характеристики через скорость рейки ($v_1 = \dot{S}$):
+\begin{equation*}
+	\omega_2 = \frac{\dot{S}}{R}, \,\,\, v_c = \omega_2r = \frac{\dot{S}}{R}, \,\,\, \omega_3 = \frac{v_c}{r} = \frac{\dot{S}}{R}
+\end{equation*}
+\newpage
+Подставим в (2) ранее выраженные значения и сгруппируем:
+\begin{equation*}
+	T = \frac{m_1 \dot{S}^2}{2} + \frac{m_{2} \rho^2 \dot{S}^2}{2 R^2} + \frac{m_3 \dot{S}^2 r^2}{2 R^2} + \frac{m_3 \dot{S}^2 r^2}{4 R^2} = \frac{\dot{S}^2}{2} \left( m_1 + m_{2} \frac{\rho^2}{R^2} + \frac{3}{2} m_3 \frac{r^2}{R^2} \right)
+\end{equation*}
+\par
+Возьмём дифференциал кинетической энергии:
+\begin{equation}
+	dT = \dot{S} d\dot{S} \left( m_1 + m_2 \frac{\rho^2}{R^2} + \frac{3}{2} m_3 \frac{r^2}{R^2} \right)
+\end{equation}
+\par
+Далее вычислим элементарную работу внешних сил. Работу совершают сила тяги $\vec{F}$, момент сопротивления $M_{Oz}$ и продольная систавляющая силы тяжести катка:
+\begin{equation*}
+	\sum dA(F_k^{(e)}) = F dS - M_{Oz} d\varphi_2 - m_3 g \sin\beta dS_c
+\end{equation*}
+\par
+Выразим дифференциалы через $dS$:
+\begin{equation*}
+	d\varphi_2 = \frac{dS}{R}, \,\,\, dS_c = d\varphi_2r = \frac{dSr}{R}, \,\,\, M_{Oz}d\varphi_2 = \alpha\frac{\dot{S}}{R}\frac{dS}{R} = \frac{\alpha\dot{S}dS}{R^2}
+\end{equation*}
+\par
+Итоговая сумма элементарных работ:
+\begin{equation}
+	\sum dA(F_k^{(e)}) = dS \left( F - \frac{\alpha \dot{S}}{R^2} - m_3 \frac{r}{R} g \sin\beta \right)
+\end{equation}
+\par
+Подставим (3) и (4) в (1):
+\begin{equation*}
+	\dot{S} d\dot{S} \left( m_1 + m_2 \frac{\rho^2}{R^2} + \frac{3}{2} m_3 \frac{r^2}{R^2} \right) = dS \left( F - \frac{\alpha \dot{S}}{R^2} - m_3 \frac{r}{R} g \sin\beta \right)
+\end{equation*}
+\par
+Поделим обе части на $dS$ и с учётом $\frac{\dot{S}d\dot{S}}{dS} = \ddot{S}$ получим:
+\begin{equation*}
+	\ddot{S} \left( m_1 + m_2 \frac{\rho^2}{R^2} + \frac{3}{2} m_3 \frac{r^2}{R^2} \right) + \frac{\alpha\dot{S}}{R^2} = F - m_3 \frac{r}{R} g \sin\beta
+\end{equation*}
+\par
+Заменим $m_1 + m_2 \frac{\rho^2}{R^2} + \frac{3}{2} m_3 \frac{r^2}{R^2}$ на $k$, $F - m_3 \frac{r}{R} g \sin\beta$ на $l$ и получим:
+\begin{equation}
+	\ddot{S} + \frac{\alpha}{kR^2}\dot{S} = \frac{l}{k}
+\end{equation}
+\par
+Для (5) составим характеристическое уравнение:
+\begin{equation*}
+	\lambda^2 + \frac{\alpha}{kR^2}\lambda = 0
+\end{equation*}
+\begin{equation*}
+	\lambda_1 = 0, \,\,\, \lambda_2 = -\frac{\alpha}{kR^2}
+\end{equation*}
+\par
+Тогда решение уравнения (5) принимает вид:
+\begin{equation*}
+	S = S_{\text{оо}} + S_{\text{чн}} = C_1 + C_2e^{-\frac{\alpha}{kR^2}t} + C_3t
+\end{equation*}
+\par
+Найдем константу $C_3$:
+\begin{equation*}
+	C_3 \frac{\alpha}{k R^2} = \frac{l}{k} \implies C_3 = \frac{R^2l}{\alpha}
+\end{equation*}
+\par
+Найдем $C_1$ и $C_2$, подставив начальные условия:
+\begin{equation*}
+	S(0) = 0 \implies C_1 + C_2 = 0 \implies C_1 = -C_2
+\end{equation*}
+\begin{equation*}
+	\dot{S}(0) = 0 \implies -\frac{\alpha}{kR^2}C_2 + C_3 = 0 \implies C_2 = \frac{R^2kl}{\alpha^2}
+\end{equation*}
+\par
+Получаем закон движения в аналитическом виде:
+\begin{equation}
+	S(t) = \frac{R^2l}{\alpha} \left( \frac{R^2 k}{\alpha} (e^{-\frac{\alpha}{k R^2} t} - 1) + t \right)
+\end{equation}
+\par
+Подставим числовые значения и вычислим значения констант $k$ и $l$:
+\begin{equation*}
+	k = 1 + 2 \cdot \frac{0,36 R^2}{R^2} + \frac{3}{2} \cdot 4 \cdot \left(\frac{1}{2}\right)^2 = 1 + 0,72 + 1,5 = 3,22
+\end{equation*}
+\begin{equation*}
+	l = 19,6 - 4 \cdot \frac{1}{2} \cdot 9,8 \cdot \frac{1}{2} = 19,6 - 9,8 = 9,8
+\end{equation*}
+\par
+Подставим числовые значения в закон движения (6):
+\begin{equation*}
+	S(t) = \frac{0,2^2}{3,22} \cdot 9,8 \cdot \left( \frac{0,04 \cdot 3,22}{3,22} (e^{-25t} - 1) + t \right)
+\end{equation*}
+\begin{equation*}
+	S(t) \approx 0,12 (0,04 e^{-25t} - 0,04 + t) = 0,0048 (e^{-25t} - 1) + 0,12 t
+\end{equation*}
+\newpage
+\hspace{-1.2cm}
+\begin{minipage}{0.4\textwidth}
+\par
+$\,\,\,\,\,\,\,\,\,\,\,\,$2) Далее определим силу натяжения нити в начале движения ($T_0$). Отдельно рассмотрим левую часть механизма (каток), чтобы сила $\vec{T}$ стала внешней. \par $\,\,\,\,\,\,\,\,\,\,\,\,$ Воспользуемся теоремой об изменении кинетического момента для катка относительно его МЦС (точка $P$):
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+\centering
+\begin{tikzpicture}[]
+	
+	\coordinate (C1) at (0, 0);
+	\coordinate (P) at (0.99, -1.74);
+	\coordinate (D44) at (-4.74, 0.3);
+	\coordinate (D11) at (-2.5, -3.7);
+	\coordinate (D22) at (3.5, -0.35);
+	\coordinate (D33) at (0.5, -3.7);
+	\coordinate (D44) at (-4.74, 0.3);
+	\draw[thick, -latex] (D11) -- (D22);
+	\draw[thick, -latex] (D11) -- (D44);
+	\draw[thick] (D11) -- (D33);
+	
+	\draw[thick] (C1) circle (2);
+	\fill (C1) circle (0.06);
+	\fill (P) circle (0.06);
+	\fill (D11) circle (0.04);
+	
+	\coordinate (G) at (-2.9, -4.3);
+	\draw[thick] (G) circle (4pt);
+	\draw[thick] ($(G) + (45:2.8pt)$) -- ($(G) + (225:2.8pt)$);
+	\draw[thick] ($(G) + (135:2.8pt)$) -- ($(G) + (315:2.8pt)$);
+	\draw[decorate, decoration={snake, amplitude=0.8pt, segment length=12pt}, thick] 
+	($(G)!4pt!(D11)$) -- (D11);
+	
+	\draw[-latex, ultra thick] (P) -- (-0.7, 1.23);
+	\draw[-latex, ultra thick] (P) -- (-0.7, -2.7);
+	\draw[-latex, ultra thick] (C1) -- (0, -1.4);
+	\draw[-latex, ultra thick] (C1) -- (3, 1.72);
+	\draw[-latex, ultra thick] (C1) -- (1.4, 0.802);
+	
+	\draw[thick] (-1.8, -3.7) arc[start angle=-5, end angle=25, radius=0.7];
+	\draw[thick] (0.4, -0.7) arc[start angle=-55, end angle=-90, radius=0.7];
+	\draw[-latex, ultra thick] (-2.2, 0) arc[start angle=180, end angle=140, radius=2.2];
+	\draw[-latex, ultra thick] (0, 2.2) arc[start angle=90, end angle=50, radius=2.2];
+	
+	\node[left, yshift=-3pt] at (D44) {$y$};
+	\node[right, yshift=-5pt] at (D22) {$x$};
+	\node[left, yshift=-5pt, xshift=-2pt] at (G) {$z$};
+	\node[above right, yshift=-3pt, xshift=2pt] at (-1.8, -3.7) {$\beta$};
+	\node[left, yshift=-5pt, xshift=2pt] at (-0.7, 1.2) {$\vec{N}$};
+	\node[above left, yshift=-3pt, xshift=-2pt] at (-0, -1.4) {$m_3\vec{g}$};
+	\node[above left, yshift=-4pt, xshift=-2pt] at (1.4, 0.8) {$\vec{v}_c$};
+	\node[above left, yshift=-4pt, xshift=-2pt] at (3, 1.7) {$\vec{T}$};
+	\node[above left, yshift=-4pt, xshift=-2pt] at (-0.5, -2.7) {$\vec{F}_{\text{тр}}$};
+	\node[left, yshift=-4pt] at (C1) {$C$};
+	\node[above left, yshift=-4pt, xshift=-2pt] at (-1.7, 1.2) {$\varphi_3$};
+	\node[above left, yshift=-4pt, xshift=-2pt] at (1.7, 2) {$\omega_3$};
+	\node[] at (1.1, -2.15) {$P$};
+	
+\end{tikzpicture}
+\end{minipage}
+\par
+\vspace{1cm}
+\begin{equation}
+	\frac{dK_P}{dt} = \sum M_P(F_k^{(e)})
+\end{equation}
+\par
+
+По теореме Кёнига относительно МЦС:
+\begin{equation*}
+	K_{P} = J_{Cz} \omega_c + m_3 v_c r = \frac{m_3 r^2}{2} \frac{v_c}{r} + m_3 v_c r = m_3 v_c r \left( 1 + \frac{1}{2} \right)
+\end{equation*}
+\par
+Выразим через $\dot{S}$, где $v_c = \frac{\dot{S}}{2}$:
+\begin{equation}
+	K_{P} = \frac{3}{4} m_3 \dot{S} r \implies \frac{dK_{P}}{dt} = \frac{3}{4} m_3 \ddot{S} r
+\end{equation}
+\par
+Нормальная реакция опоры: 
+\begin{equation*}
+	\sum F_{ky} = N - m_3 g \cos\beta = 0 \implies N = m_3 g \cos\beta
+\end{equation*}
+\par
+Сумма моментов сил:
+\begin{equation}
+	\sum M_P(F_k^{(e)}) = Tr - m_3 g \sin\beta \cdot r
+\end{equation}
+\par
+Подставим (8) и (9) в (7):
+\begin{equation*}
+	\frac{3}{4} m_3 \ddot{S} r = Tr - m_3 g \sin\beta \cdot r \implies T(t) = m_3 g \sin\beta + \frac{3}{4} m_3 \ddot{S}(t)
+\end{equation*}
+\par
+Для расчёта требуется ускорение при $t = 0$:
+\begin{equation*}
+	\dot{S}(t) = -0,12 e^{-25t} + 0,12 \implies \ddot{S}(t) = 3 e^{-25t} 
+\end{equation*}
+\begin{equation*}
+	\ddot{S}(0) = 3 \text{ м/с}^2
+\end{equation*}
+\par
+Итоговый расчет $T_0$:
+\begin{equation*}
+	T_0 = T(0) = 4 \left( 9,8 \cdot \frac{1}{2} + \frac{3}{4} \cdot 3 \right) = 4 (4,9 + 2,25) = 28,6 \text{ Н}
+\end{equation*}
+\section*{Ответ}
+\begin{enumerate}[]
+	\item $S(t) = 0,0048 (e^{-25t} - 1) + 0,12 t$
+	\item $T_0 = 28,6 \text{ Н}$
+\end{enumerate}
+\end{document}

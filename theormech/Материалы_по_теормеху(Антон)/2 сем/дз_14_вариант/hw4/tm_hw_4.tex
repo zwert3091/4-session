@@ -1,0 +1,513 @@
+\documentclass{article}
+\usepackage{physics}
+\usepackage{mathrsfs}
+\usepackage{cmap}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{indentfirst, setspace}
+\usepackage{amsfonts,amssymb}
+\usepackage{amsmath,amsthm}
+\setlength{\parindent}{0.75cm}
+
+% Кодировки и языки
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+
+% Математика
+\usepackage{amsmath,amssymb,amsfonts}
+
+% Графика и TikZ
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{arrows.meta, shapes, positioning, decorations.pathmorphing, patterns, decorations.pathreplacing, calc}
+
+% Оформление оглавления, подписей, шрифта
+\usepackage{tocloft}
+\usepackage{caption}
+\usepackage{tempora}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{indentfirst}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{tabularx}
+\usepackage{wrapfig}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{float}
+
+% Настройки списков
+\setlist{nosep}
+\setlist[itemize]{leftmargin=1.25cm, itemindent=0.65cm}
+\setlist[enumerate]{leftmargin=1.25cm, itemindent=0.55cm}
+
+\usepackage[
+	a4paper,
+	left=30mm,
+	right=15mm,
+	top=20mm,
+	bottom=20mm,
+	]{geometry}
+	
+% Параметры страницы
+\geometry{left=30mm,right=10mm,top=20mm,bottom=20mm}
+\onehalfspacing
+\linespread{1.3}
+\parindent=1.25cm
+
+% Нумерация и вид списков
+\renewcommand{\theenumi}{\arabic{enumi}}
+\renewcommand{\labelenumi}{\arabic{enumi})}
+\renewcommand{\theenumii}{.\arabic{enumii}}
+\renewcommand{\labelenumii}{\asbuk{enumii})}
+\renewcommand{\theenumiii}{.\arabic{enumiii}}
+\renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.}
+
+% Подписи к рисункам и таблицам
+\addto\captionsrussian{\renewcommand{\figurename}{Рисунок}}
+\DeclareCaptionLabelSeparator{dash}{~---~}
+\captionsetup{labelsep=dash}
+\captionsetup[figure]{justification=centering,labelsep=dash}
+\captionsetup[table]{labelsep=dash,justification=raggedright,singlelinecheck=off}
+
+% Путь к картинкам
+\graphicspath{{images/}}
+
+% Маркер для itemize
+\def\labelitemi{---}
+
+\frenchspacing
+
+\begin{document}
+
+\selectlanguage{russian}
+\fontsize{14}{16}\selectfont
+
+\begin{titlepage}
+	\begin{flushleft}
+		{\Large\textbf{Министерство образования и науки РФ}}
+		
+		\vspace{1cm}
+		
+		{\Large\textbf{Московский государственный технический университет имени Н.Э. Баумана}}
+		
+		\vspace{1cm}
+		
+		{\Large\textbf{Факультет <<Фундаментальные науки>>}}
+		
+		\vspace{1cm}
+		
+		{\Large\textbf{Кафедра <<Теоретическая механика>> имени профессора\\Н.Е. Жуковского}}
+		
+		\vspace{3cm}
+		
+		\textbf{\Large Домашнее задание №\underline{4}}
+		
+		\vspace{0.4cm}
+		
+		\underline{Колебания линейной системы с одной степенью свободы}\\[-1mm]
+		
+		{\normalsize \textit{Тема домашнего задания}}
+		
+		\vspace{1cm}
+		
+		\begin{tabular}{@{} p{2cm} p{3cm} @{}}
+			\textbf{Вариант} & \underline{14} \tabularnewline[4mm]
+			\textbf{Группа} & \underline{ФН12-41Б}
+		\end{tabular}
+		
+		\vspace{2cm}
+		
+		\begin{tabular}{@{} p{3.8cm} p{5.4cm} p{2.5cm} p{3cm} @{}}
+			\textbf{Студент} & \underline{Михайлов А.К.} & \hrulefill & \hrulefill \\[-1mm]
+			
+			& {\normalsize \textit{Фамилия, инициалы}} & {\normalsize \textit{подпись}} & {\normalsize \textit{дата}} \tabularnewline[6mm]
+			
+			\textbf{Преподаватель} & \underline{Стихно К.А.} & & \\[-1mm]
+			
+			& {\normalsize \textit{Фамилия, инициалы}} & &
+		\end{tabular}
+		
+		\vfill
+		
+		\textbf{\textit{Москва, 20\underline{26} год}}
+	\end{flushleft}
+\end{titlepage}
+
+\hspace{-1.3cm}
+\begin{minipage}{0.1\textwidth}
+\centering
+\begin{tikzpicture}
+	
+	\coordinate (O) at (0, 0);
+	\coordinate (O1) at (2, 0);
+	\coordinate (O2) at (-2, 0);
+	\coordinate (O3) at (0, 2);
+	
+	\coordinate (O11) at ($ (O1) + (0.5, 0) $);
+	\coordinate (O22) at ($ (O2) - (0.5, 0) $);
+	\coordinate (O33) at ($ (O3) + (0, 0.5) $);
+	
+	\coordinate (H1) at ($ (O) + (1.25, 0) $);
+	\coordinate (H2) at ($ (O) - (1.25, 0) $);
+	
+	\coordinate (H11) at ($ (H1) - (0, 2.5) $);
+	\coordinate (H22) at ($ (H2) - (0, 2.5) $);
+	
+	\coordinate (H111) at ($ (H11) - (0, 0.8) $);
+	\coordinate (H222) at ($ (H22) - (0, 0.8) $);
+	
+	\coordinate (leftBottom) at ($ (H22) - (1.8, 0.5) $);
+	\coordinate (rightTop) at ($ (H11) + (1.8, 0) $);
+	
+	\coordinate (left) at ($ (leftBottom) - (0.5, 0.55) $);
+	\coordinate (right) at ($ (rightTop) + (1.2, -1.05) $);
+	\coordinate (up) at ($ (right) + (0, 1.5) $);
+	\coordinate (middle) at ($ (rightTop) + (1.2, -0.25) $);
+	
+	\draw[thick] (left) -- (right) -- (up);
+	\draw[thick] (leftBottom) rectangle (rightTop);
+	\draw[-latex, thick] (middle) -- ($ (middle) - (1.2, 0) $);
+	
+	\draw[thick] ($ (H2) - (0, 0.05) $) circle (0.04);
+	\draw[thick] ($ (H2) - (0, 0.1) $) -- ($ (H2) - (0, 0.3) $);
+	\draw[ decoration={zigzag, segment length=4mm, amplitude=2mm}, decorate, thick] ($ (H2) - (0, 0.289) $) -- ($ (H2) - (0, 2) $);
+	\draw[thick] ($ (H2) - (0, 2) $) -- (H22);
+	\fill[thick] ($ (H22) + (0, 0.03) $) circle (0.04);
+	
+	\draw[thick] ($ (H11) + (0, 0.05) $) circle (0.04);
+	\fill[thick] ($ (H1) - (0.13, 0.87) $) rectangle ($ (H1) + (0.13, -0.8) $);
+	\draw[thick] (H1) -- ($ (H1) - (0, 0.8) $);
+	\draw[thick] ($ (H11) + (0, 0.08) $) -- ($ (H11) + (0, 1.3) $) -- ($ (H11) + (0.2, 1.4) $) -- ($ (H11) + (0.2, 1.8) $);
+	\draw[thick] ($ (H11) + (0, 0.08) $) -- ($ (H11) + (0, 1.3) $) -- ($ (H11) + (-0.2, 1.4) $) -- ($ (H11) + (-0.2, 1.8) $);
+	
+	
+	\draw[thick] ($ (H11) - (1, 0) $) -- ($ (H11) - (1, -2.5) $);
+	\draw[thick] ($ (H22) + (1, 0) $) -- ($ (H22) + (1, 2.5) $);
+	\draw[thick] ($ (O) + (0.25, 0) $) arc [start angle=0, end angle=180, radius=0.25];
+	
+	\draw[ultra thick] ($ (O) + (0.1, 0) $) -- (O1);
+	\draw[ultra thick] ($ (O) - (0.1, 0) $) -- (O2);
+	\draw[ultra thick] ($ (O) + (0, 0.1) $) -- (O3);
+	
+	\draw[dash dot] ($ (O11) + (0.7, 0) $) -- ($ (O11) - (0.7, 0) $);
+	\draw[dash dot] ($ (O22) - (0.7, 0) $) -- ($ (O22) + (0.7, 0) $);
+	\draw[dash dot] ($ (O33) - (0.7, 0) $) -- ($ (O33) + (0.7, 0) $);
+	
+	\draw[dash dot] ($ (O11) + (0, 0.7) $) -- ($ (O11) - (0, 0.7) $);
+	\draw[dash dot] ($ (O22) - (0, 0.7) $) -- ($ (O22) + (0, 0.7) $);
+	\draw[dash dot] ($ (O33) - (0, 0.7) $) -- ($ (O33) + (0, 0.7) $);
+	
+	\draw[dash dot] ($ (O) + (0, 0.5) $) -- ($ (O) - (0, 3.2) $);
+	
+	\fill[] (O11) circle (0.03);
+	\fill[] (O22) circle (0.03);
+	\fill[] (O33) circle (0.03);
+	
+	\draw[ultra thick] (O) circle (0.1);
+	\draw[thick] (H111) circle (0.04);
+	\draw[thick] (H222) circle (0.04);
+	
+	\draw[thick] (H111) circle (0.25);
+	\draw[thick] (H222) circle (0.25);
+	
+	\draw[thick] (O11) circle (0.5);
+	\draw[thick] (O22) circle (0.5);
+	\draw[thick] (O33) circle (0.5);
+	
+	\draw[fill=white, thick] ($ (H111) + (0, 0.03) $) -- ($ (H111) + (0.2, 0.3) $) -- ($ (H111) + (-0.2, 0.3) $) -- ($ (H111) + (0, 0.03) $);
+	\draw[fill=white, thick] ($ (H222) + (0, 0.03) $) -- ($ (H222) + (0.2, 0.3) $) -- ($ (H222) + (-0.2, 0.3) $) -- ($ (H222) + (0, 0.03) $);
+	
+	\draw[latex-latex] ($ (O1) + (0.5, 0.6) $) -- ($ (O) + (0, 0.6) $);
+	\draw[latex-latex] ($ (O2) + (-0.5, 0.6) $) -- ($ (O) + (0, 0.6) $);
+	
+	\draw[latex-latex] ($ (O) + (0.6, 0) $) -- ($ (O3) + (0.6, 0.5) $);
+	
+	\draw[latex-latex] ($ (H11) + (0, 0.4) $) -- ($ (H11) + (-1.25, 0.4) $);
+	\draw[latex-latex] ($ (H22) + (0, 0.4) $) -- ($ (H22) + (1.25, 0.4) $);
+	
+	\fill[pattern=north east lines] ( $ (left) - (0, 0.3) $ ) rectangle ( $ (right) + (0.3, 0) $ );
+	\fill[pattern=north east lines] (right) rectangle ( $ (up) + (0.3, 0) $ );
+	
+	\draw[thick, -latex] ($ (O33) - (0, 0.7) $) arc [start angle=90, end angle=150, radius=0.7];
+	
+	\draw[] (-2.7, 0.3) -- (-3.3, 0.9) -- (-3.7, 0.9);
+	\draw[] (2.7, 0.3) -- (3.3, 0.9) -- (3.7, 0.9);
+	\draw[] (0.25, 2.65) -- (1, 2.95) -- (1.4, 2.95	);
+	\draw[] (-1.4, -1) -- (-1.8, -1.6) -- (-2.2, -1.6);
+	\draw[] (1.45, -1) -- (1.85, -1.6) -- (2.25, -1.6);
+	
+	\node[] at ( $ (O33) + (1.2, 0.65) $ ) {$2$};
+	\node[] at ( $ (O11) + (1, 1.1) $ ) {$1$};
+	\node[] at ( $ (O22) + (-1, 1.1) $ ) {$1$};
+	\node[] at ( $ (H11) + (0.77, 1.1) $ ) {$4$};
+	\node[] at ( $ (H22) + (-0.73, 1.1) $ ) {$3$};
+	
+	\node[] at ( $ (O) + (1.25, 0.85) $ ) {$l$};
+	\node[] at ( $ (O) + (-1.25, 0.85) $ ) {$l$};
+	\node[] at ( $ (O) + (0.75, 1.5) $ ) {$l$};
+	\node[] at ( $ (H11) + (-0.6, 0.75) $ ) {$\frac{l}{2}$};
+	\node[] at ( $ (H22) + (0.6, 0.75) $ ) {$\frac{l}{2}$};
+	\node[] at ( $ (rightTop) + (0.65, 0.1) $ ) {$s(t)$};
+	\node[] at ( $ (O) + (-0.9, 1.9) $ ) {$q(t)$};
+
+\end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+\par
+\vspace{5pt}
+\textbf{Условие задачи:}
+Рассматриваются малые колебания механической системы с одной степенью свободы около положения устойчивого равновесия. Номерами 1 и 2 обозначены звенья, массу которых необходимо учитывать, номером 3 --- упругий элемент, номером 4 --- демпфер. Обобщённая координата $q(t)$ отсчитывается от положения равновесия в невозмущённом состоянии.
+\end{minipage}
+\par
+\vspace{5pt}
+\noindent
+Силы и моменты воздействия упругих элементов на тела пропорциональны
+удлинению пружин. Демпфер создает силу линейно-вязкого сопротивления $R = -\mu_4 v_n$, пропорциональную скорости движения поршня $v_n$, где $\mu_4 > 0$ --- коэффициент сопротивления демпфера. Внешнее воздействие $s(t)$ изменяется во времени по закону $s(t) = \sin(pt)$. Начальные условия и параметры системы заданы в таблице и на схеме. Необходимо:
+\begin{enumerate}
+	\item Составить дифференциальное уравнение малых колебаний системы.
+	\item Получить решение этого уравнения и, используя заданные начальные условия, определить постоянные интегрирования.
+	\item Определить период установившихся вынужденных колебаний $T_\text{в}$ и добротность системы $\text{Д}$; для вариантов с малым линейно-вязким сопротивлением найти $T_1$ --- условный период затухающих колебаний, $\delta$ --- логарифмический декремент колебаний, $\tau_0$ --- постоянную времени затухающих колебаний.
+\end{enumerate}
+\begin{center}
+	\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
+		\hline
+		$l$ & $m_1$ & $m_2$ & $c_3$ & $\mu_4$ & $S_0$ & $p$ & $q(0)$ & $\dot{q}(0)$ \\
+		\hline
+		м & кг & кг & Н/м & Н$\cdot$с/м & м & рад/с & рад & рад/с \\
+		\hline
+		0,5 & 0,5 & 1 & 3278,4 & 96 & 0,05 & 16 & 0,1 & -0,5 \\
+		\hline
+	\end{tabular}
+\end{center}
+\newpage
+\section*{Решение}
+\subsection*{1. Дифференциальное уравнение движения}
+Составим дифференциальное уравнение малых колебаний системы, используя уравнение Лагранжа второго рода. В качестве обобщенной координаты выберем угол отклонения $q(t)$ звена 2 от вертикали (положения равновесия).
+
+Так как тележка совершает заданное движение $s(t)$, система отсчета, связанная с ней, является неинерциальной с переносным ускорением $a_e = \ddot{s}(t) = -S_0 p^2 \sin(pt)$ (предполагая $s(t) = S_0 \sin(pt)$, где $S_0$ --- амплитуда). При этом на тела с массами действуют переносные силы инерции $\Phi_i = -m_i a_e$.
+
+\hspace{2.8cm}
+\begin{tikzpicture}
+	
+	\coordinate (O) at (0, 0);
+	\coordinate (O1) at (2, 0);
+	\coordinate (O2) at (-2, 0);
+	\coordinate (O3) at (0, 2);
+	
+	\coordinate (O11) at ($ (O1) + (0.5, 0) $);
+	\coordinate (O22) at ($ (O2) - (0.5, 0) $);
+	\coordinate (O33) at ($ (O3) + (0, 0.5) $);
+	
+	\coordinate (H1) at ($ (O) + (1.25, 0) $);
+	\coordinate (H2) at ($ (O) - (1.25, 0) $);
+	
+	\coordinate (H11) at ($ (H1) - (0, 2.5) $);
+	\coordinate (H22) at ($ (H2) - (0, 2.5) $);
+	
+	\coordinate (H111) at ($ (H11) - (0, 0.8) $);
+	\coordinate (H222) at ($ (H22) - (0, 0.8) $);
+	
+	\coordinate (leftBottom) at ($ (H22) - (1.8, 0.5) $);
+	\coordinate (rightTop) at ($ (H11) + (1.8, 0) $);
+	
+	\coordinate (left) at ($ (leftBottom) - (0.5, 0.55) $);
+	\coordinate (right) at ($ (rightTop) + (1.2, -1.05) $);
+	\coordinate (up) at ($ (right) + (0, 1.5) $);
+	\coordinate (middle) at ($ (rightTop) + (1.2, -0.25) $);
+	
+	\draw[thick] (left) -- (right) -- (up);
+	\draw[thick] (leftBottom) rectangle (rightTop);
+	\draw[-latex, thick] (middle) -- ($ (middle) - (1.2, 0) $);
+	
+	\draw[thick] ($ (H2) - (0, 0.05) $) circle (0.04);
+	\draw[thick] ($ (H2) - (0, 0.1) $) -- ($ (H2) - (0, 0.3) $);
+	\draw[ decoration={zigzag, segment length=4mm, amplitude=2mm}, decorate, thick] ($ (H2) - (0, 0.289) $) -- ($ (H2) - (0, 2) $);
+	\draw[thick] ($ (H2) - (0, 2) $) -- (H22);
+	\fill[thick] ($ (H22) + (0, 0.03) $) circle (0.04);
+	
+	\draw[thick] ($ (H11) + (0, 0.05) $) circle (0.04);
+	\fill[thick] ($ (H1) - (0.13, 0.87) $) rectangle ($ (H1) + (0.13, -0.8) $);
+	\draw[thick] (H1) -- ($ (H1) - (0, 0.8) $);
+	\draw[thick] ($ (H11) + (0, 0.08) $) -- ($ (H11) + (0, 1.3) $) -- ($ (H11) + (0.2, 1.4) $) -- ($ (H11) + (0.2, 1.8) $);
+	\draw[thick] ($ (H11) + (0, 0.08) $) -- ($ (H11) + (0, 1.3) $) -- ($ (H11) + (-0.2, 1.4) $) -- ($ (H11) + (-0.2, 1.8) $);
+	
+	
+	\draw[thick] ($ (H11) - (1, 0) $) -- ($ (H11) - (1, -2.5) $);
+	\draw[thick] ($ (H22) + (1, 0) $) -- ($ (H22) + (1, 2.5) $);
+	\draw[thick] ($ (O) + (0.25, 0) $) arc [start angle=0, end angle=180, radius=0.25];
+	
+	\draw[thick] ($ (O) + (0.05, 0) $) -- (O1);
+	\draw[thick] ($ (O) - (0.05, 0) $) -- (O2);
+	\draw[thick] ($ (O) + (0, 0.05) $) -- (O3);
+	
+	\draw[dash dot] ($ (O11) + (0.7, 0) $) -- ($ (O11) - (0.7, 0) $);
+	\draw[dash dot] ($ (O22) - (0.7, 0) $) -- ($ (O22) + (0.7, 0) $);
+	\draw[dash dot] ($ (O33) - (0.7, 0) $) -- ($ (O33) + (0.7, 0) $);
+	
+	\draw[dash dot] ($ (O11) + (0, 0.7) $) -- ($ (O11) - (0, 0.7) $);
+	\draw[dash dot] ($ (O22) - (0, 0.7) $) -- ($ (O22) + (0, 0.7) $);
+	\draw[dash dot] ($ (O33) - (0, 0.7) $) -- ($ (O33) + (0, 0.7) $);
+	
+	\draw[dash dot] ($ (O) + (0, 0.5) $) -- ($ (O) - (0, 3.2) $);
+	
+	\fill[] (O11) circle (0.05);
+	\fill[] (O22) circle (0.05);
+	\fill[] (O33) circle (0.05);
+	
+	\draw[thick] (O) circle (0.05);
+	\draw[thick] (H111) circle (0.04);
+	\draw[thick] (H222) circle (0.04);
+	
+	\draw[thick] (H111) circle (0.25);
+	\draw[thick] (H222) circle (0.25);
+	
+	\draw[thick] (O11) circle (0.5);
+	\draw[thick] (O22) circle (0.5);
+	\draw[thick] (O33) circle (0.5);
+	
+	\draw[fill=white, thick] ($ (H111) + (0, 0.03) $) -- ($ (H111) + (0.2, 0.3) $) -- ($ (H111) + (-0.2, 0.3) $) -- ($ (H111) + (0, 0.03) $);
+	\draw[fill=white, thick] ($ (H222) + (0, 0.03) $) -- ($ (H222) + (0.2, 0.3) $) -- ($ (H222) + (-0.2, 0.3) $) -- ($ (H222) + (0, 0.03) $);
+	
+	\draw[latex-latex] ($ (O1) + (0.5, 0.6) $) -- ($ (O) + (0, 0.6) $);
+	\draw[latex-latex] ($ (O2) + (-0.5, 0.6) $) -- ($ (O) + (0, 0.6) $);
+	
+	\draw[latex-latex] ($ (O) + (0.6, 0) $) -- ($ (O3) + (0.6, 0.5) $);
+	
+	\draw[latex-latex] ($ (H11) + (0, 0.4) $) -- ($ (H11) + (-1.25, 0.4) $);
+	\draw[latex-latex] ($ (H22) + (0, 0.4) $) -- ($ (H22) + (1.25, 0.4) $);
+	
+	\fill[pattern=north east lines] ( $ (left) - (0, 0.3) $ ) rectangle ( $ (right) + (0.3, 0) $ );
+	\fill[pattern=north east lines] (right) rectangle ( $ (up) + (0.3, 0) $ );
+	
+	\draw[thick, -latex] ($ (O33) - (0, 0.7) $) arc [start angle=90, end angle=150, radius=0.7];
+	
+	\draw[] (-2.7, 0.3) -- (-3.3, 0.9) -- (-3.7, 0.9);
+	\draw[] (2.7, 0.3) -- (3.3, 0.9) -- (3.7, 0.9);
+	\draw[] (0.25, 2.65) -- (1, 2.95) -- (1.4, 2.95	);
+	\draw[] (-1.4, -1) -- (-1.8, -1.6) -- (-2.2, -1.6);
+	\draw[] (1.45, -1) -- (1.85, -1.6) -- (2.25, -1.6);
+	
+	\node[] at ( $ (O33) + (1.2, 0.65) $ ) {$2$};
+	\node[] at ( $ (O11) + (1, 1.1) $ ) {$1$};
+	\node[] at ( $ (O22) + (-1, 1.1) $ ) {$1$};
+	\node[] at ( $ (H11) + (0.77, 1.1) $ ) {$4$};
+	\node[] at ( $ (H22) + (-0.73, 1.1) $ ) {$3$};
+	
+	\node[] at ( $ (O) + (1.25, 0.85) $ ) {$l$};
+	\node[] at ( $ (O) + (-1.25, 0.85) $ ) {$l$};
+	\node[] at ( $ (O) + (0.75, 1.5) $ ) {$l$};
+	\node[] at ( $ (H11) + (-0.6, 0.75) $ ) {$\frac{l}{2}$};
+	\node[] at ( $ (H22) + (0.6, 0.75) $ ) {$\frac{l}{2}$};
+	\node[] at ( $ (rightTop) + (0.65, 0.1) $ ) {$s(t)$};
+	\node[] at ( $ (O) + (-0.9, 1.9) $ ) {$q(t)$};
+	
+	\draw[ultra thick, -latex] ( $ (O1) + (0.5, 0) $ ) -- ( $ (O1) + (1.5, 0) $ );
+	\draw[ultra thick, -latex] ( $ (O1) + (0.5, 0) $ ) -- ( $ (O1) + (0.5, 1) $ );
+	
+	\draw[ultra thick, -latex] ( $ (O2) + (-0.5, 0) $ ) -- ( $ (O2) + (0.5, 0) $ );
+	\draw[ultra thick, -latex] ( $ (O2) + (-0.5, 0) $ ) -- ( $ (O2) + (-0.5, -1) $ );
+	
+	\draw[ultra thick, -latex] ( $ (O3) + (0, 0.5) $ ) -- ( $ (O3) + (-1, 0.5) $ );
+	\draw[ultra thick, -latex] ( $ (O3) + (0, 0.5) $ ) -- ( $ (O3) + (1, 0.5) $ );
+	
+	\node[] at ( $ (O11) + (-0.3, 1.1) $ ) {$\vec{v}_1$};
+	\node[] at ( $ (O11) + (1.15, 0.3) $ ) {$\vec{\text{Ф}}_1$};
+	
+	\node[] at ( $ (O22) + (-0.3, -1) $ ) {$\vec{v}_1$};
+	\node[] at ( $ (O22) + (1.15, 0.3) $ ) {$\vec{\text{Ф}}_1$};
+	
+	\node[] at ( $ (O33) + (-1.15, +0.3) $ ) {$\vec{v}_2$};
+	\node[] at ( $ (O33) + (1.15, -0.3) $ ) {$\vec{\text{Ф}}_2$};
+	
+\end{tikzpicture}
+
+\par
+Кинетическая энергия системы:
+$$T = 2 T_1 + T_2 = 2 \frac{m_1 v_1^2}{2} + \frac{m_2 v_2^2}{2}$$
+\par
+Учитывая, что скорости тел с массами равны $v_1 = l \dot{q}$ и $v_2 = l \dot{q}$:
+$$T = m_1 (l \dot{q})^2 + \frac{m_2}{2} (l \dot{q})^2 = \frac{1}{2} (2m_1 + m_2) l^2 \dot{q}^2 = \frac{1}{2} a \dot{q}^2,$$
+где $a = (2m_1 + m_2)l^2$.
+
+Потенциальная энергия системы $\Pi = \Pi_{\text{упр}} + \Pi_{\text{тяж}}$. Точка крепления пружины (звено 3) находится на расстоянии $\frac{l}{2}$ от оси вращения. Горизонтальная деформация пружины $\Delta_3 = \frac{l}{2} \sin q$. При малых углах $\sin q \approx q$, поэтому $\Delta \approx \frac{l}{2} q$.
+$$\Pi_{\text{упр}} = \frac{1}{2} c_3 \Delta^2 \approx \frac{1}{2} c_3 \left(\frac{l}{2} q\right)^2 = \frac{1}{8} c_3 l^2 q^2$$
+\par
+Изменение высоты грузов 1 взаимно компенсируется (один опускается, другой поднимается). Изменение высоты груза 2: $\Delta h_2 = l \cos q - l = l(\cos q - 1)$. Используя разложение в ряд Тейлора $\cos q \approx 1 - \frac{q^2}{2}$, получаем $\Delta h_2 \approx -l \frac{q^2}{2}$.
+$$\Pi_{\text{тяж}} = m_2 g \Delta h_2 \approx -m_2 g l \frac{q^2}{2}$$
+$$\Pi = \frac{1}{2} \left( \frac{1}{4} c_3 l^2 - m_2 g l \right) q^2 = \frac{1}{2} c_{\text{0}} q^2,$$
+где $c_{\text{0}} = \frac{1}{4} c_3 l^2 - m_2 g l$.
+
+Найдем диссипативную функцию Рэлея для звена 4. Шток демпфера также прикреплен на расстоянии $\frac{l}{2}$ от оси. Скорость штока $v_4 = \frac{d}{dt}(\frac{l}{2} \sin q) = \frac{l}{2} \cos q \cdot \dot{q}$. При малых углах $\cos q \approx 1$, поэтому $v_4 \approx \frac{l}{2} \dot{q}$.
+$$\Phi = \frac{1}{2} \mu_4 v_4^2 = \frac{1}{2} \mu_4 \left( \frac{l}{2} \dot{q} \right)^2 = \frac{1}{8} \mu_4 l^2 \dot{q}^2 = \frac{1}{2} b \dot{q}^2,$$
+где $b = \frac{1}{4}\mu_4 l^2$.
+
+Найдем обобщенную силу $Q(t)$ от сил инерции: горизонтальные перемещения грузов 1 относительно тележки взаимно противоположны, их суммарная работа равна нулю. Учтем только работу на теле 2:
+$$\delta A = \Phi_2 \cdot \delta x_2 = (-m_2 \ddot{s}) (l \cos q \delta q) \approx m_2 l S_0 p^2 \sin(pt) \delta q$$
+$$Q(t) = \frac{\delta A}{\delta q} = m_2 l S_0 p^2 \sin(pt)$$
+
+Уравнение Лагранжа второго рода:
+$$\frac{d}{dt} \left( \frac{\partial T}{\partial \dot{q}} \right) - \frac{\partial T}{\partial q} = -\frac{\partial \Pi}{\partial q} - \frac{\partial \Phi}{\partial \dot{q}} + Q(t)$$
+$$a \ddot{q} + b \dot{q} + c_{\text{0}} q = Q(t)$$
+$$\ddot{q} + \frac{b}{a} \dot{q} + \frac{c_{\text{0}}}{a} q = \frac{m_2 l S_0 p^2}{a} \sin(pt)$$
+\par
+Приводим уравнение к каноническому виду $\ddot{q} + 2\varepsilon \dot{q} + \omega^2 q = f_0 \sin(pt)$:
+$$2\varepsilon = \frac{b}{a} = \frac{\mu_4 l^2 / 4}{(2m_1 + m_2)l^2} = \frac{\mu_4}{4(2m_1 + m_2)}$$
+$$\omega^2 = \frac{c_{\text{0}}}{a} = \frac{c l^2 / 4 - m_2 g l}{(2m_1 + m_2)l^2} = \frac{c l - 4 m_2 g}{4 l (2m_1 + m_2)}$$
+$$f_0 = \frac{m_2 l S_0 p^2}{(2m_1 + m_2)l^2} = \frac{m_2 S_0 p^2}{l(2m_1 + m_2)}$$
+
+Подставляем числовые значения из таблицы ($l=0,5$, $m_1=0,5$, $m_2=1$, $c_3=3278,4$, $\mu_4=96$, $S_0=0,05$, $p=16$, $g=9,81$):
+$$a = (2 \cdot 0,5 + 1) \cdot 0,5^2 = 2 \cdot 0,25 = 0,5 \text{ кг}\cdot\text{м}^2$$
+$$b = \frac{96 \cdot 0,5^2}{4} = 6 \text{ кг}\cdot\text{м}^2/\text{с}$$
+$$c_{\text{0}} = \frac{3278.4 \cdot 0,5^2}{4} - 1 \cdot 9,81 \cdot 0,5 = 204,9 - 4,905 \approx 200 \text{ Н}\cdot\text{м}$$
+
+$$2\varepsilon = \frac{b}{a} = \frac{6}{0,5} = 12 \implies \varepsilon = 6 \text{ с}^{-1}$$
+$$\omega^2 = \frac{c_{\text{0}}}{a} = \frac{200}{0,5} = 400 \implies \omega = 20 \text{ с}^{-1}$$
+$$f_0 = \frac{1 \cdot 0,5 \cdot 0,05 \cdot 16^2}{0,5} = 12,8 \text{ с}^{-2}$$
+
+\subsection*{2. Решение дифференциального уравнения}
+Общее решение уравнения: $q(t) = q_{oo}(t) + q_{\text{чн}}(t)$.
+Рассматривая случай малого вязкого сопротивления ($\varepsilon < \omega$, так как $6 < 20$):
+$$q_{oo}(t) = e^{-\varepsilon t} (C_1 \cos(\omega_1 t) + C_2 \sin(\omega_1 t)),$$
+где $\omega_1 = \sqrt{\omega^2 - \varepsilon^2} = \sqrt{400 - 36} = \sqrt{364} \approx 19,08 \text{ с}^{-1}$.
+
+Частное решение установившихся вынужденных колебаний:
+$$q_{\text{чн}}(t) = A \sin(pt - \gamma)$$
+
+Амплитуда и сдвиг фаз:
+$$A = \frac{f_0}{\sqrt{(\omega^2 - p^2)^2 + 4\varepsilon^2 p^2}} = \frac{12,8}{\sqrt{(400 - 256)^2 + 4 \cdot 36 \cdot 256}} =$$
+$$= \frac{12,8}{\sqrt{20736 + 36864}} = \frac{12,8}{240} \approx 0,053 \text{ рад}$$
+$$\gamma = \text{arctg} \frac{2\varepsilon p}{\omega^2 - p^2} = \text{arctg} \frac{12 \cdot 16}{400 - 256} = \text{arctg} \frac{192}{144} = \text{arctg} \frac{4}{3} \approx 0,927 \text{ рад}$$
+
+Подставим заданные начальные условия $q(0) = 0,1$, $\dot{q}(0) = -0,5$ для поиска постоянных интегрирования $C_1, C_2$:
+$$q(0) = C_1 + A \sin(-\gamma) = C_1 - 0,053 \cdot \sin(0,927) = 0,1$$
+$$C_1 = 0,1 + 0,053 \cdot 0,8 \approx 0,142$$
+$$\dot{q}(0) = -6 C_1 + 19,08 \cdot C_2 + 16 \cdot 0,053 \cos(-0,927) = -0,5$$
+$$-6 \cdot 0,142 + 19,08 \cdot C_2 + 0,848 \cdot 0,6 = -0,5$$
+$$C_2 = \frac{-0,5 + 0,852 - 0,5088}{19,08} \approx -0,008$$
+
+Итоговое решение дифференциального уравнения:
+$$q(t) = e^{-6t} (0,142 \cos(19,08t) - 0,008 \sin(19,08t)) + 0,053 \sin(16t - 0,927)$$
+
+\subsection*{3. Параметры процесса}
+Период вынужденных колебаний:
+$$T_{\text{в}} = \frac{2\pi}{p} = \frac{2\pi}{16} \approx 0,39 \text{ с}$$
+
+Условный период затухающих колебаний:
+$$T_1 = \frac{2\pi}{\omega_1} = \frac{2\pi}{19.08} \approx 0,33 \text{ с}$$
+
+Постоянная времени затухающих колебаний:
+$$\tau_0 = \frac{1}{\varepsilon} = \frac{1}{6} \approx 0,17 \text{ с}$$
+
+Логарифмический декремент колебаний:
+$$\delta = \varepsilon T_1 = 6 \cdot 0,33 = 1,98$$
+
+Добротность системы:
+$$\text{Д} = \frac{\omega}{2\varepsilon} = \frac{20}{12} \approx 1,67$$
+
+\end{document}

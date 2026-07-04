@@ -1,0 +1,460 @@
+\documentclass{article}
+\usepackage{physics}
+\usepackage{mathrsfs}
+\usepackage{cmap}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{indentfirst, setspace}
+\usepackage{amsfonts,amssymb}
+\usepackage{amsmath,amsthm}
+\setlength{\parindent}{0.75cm}
+
+% Кодировки и языки
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+
+% Математика
+\usepackage{amsmath,amssymb,amsfonts}
+
+% Графика и TikZ
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{arrows.meta, shapes, positioning, decorations.pathmorphing, patterns, decorations.pathreplacing}
+
+% Оформление оглавления, подписей, шрифта
+\usepackage{tocloft}
+\usepackage{caption}
+\usepackage{tempora}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{indentfirst}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{tabularx}
+\usepackage{wrapfig}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{float}
+
+% Настройки списков
+\setlist{nosep}
+\setlist[itemize]{leftmargin=1.25cm, itemindent=0.65cm}
+\setlist[enumerate]{leftmargin=1.25cm, itemindent=0.55cm}
+
+\usepackage[
+	a4paper,
+	left=30mm,
+	right=15mm,
+	top=20mm,
+	bottom=20mm,
+	]{geometry}
+	
+% Параметры страницы
+\geometry{left=30mm,right=10mm,top=20mm,bottom=20mm}
+\onehalfspacing
+\linespread{1.3}
+\parindent=1.25cm
+
+% Нумерация и вид списков
+\renewcommand{\theenumi}{\arabic{enumi}}
+\renewcommand{\labelenumi}{\arabic{enumi})}
+\renewcommand{\theenumii}{.\arabic{enumii}}
+\renewcommand{\labelenumii}{\asbuk{enumii})}
+\renewcommand{\theenumiii}{.\arabic{enumiii}}
+\renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.}
+
+% Подписи к рисункам и таблицам
+\addto\captionsrussian{\renewcommand{\figurename}{Рисунок}}
+\DeclareCaptionLabelSeparator{dash}{~---~}
+\captionsetup{labelsep=dash}
+\captionsetup[figure]{justification=centering,labelsep=dash}
+\captionsetup[table]{labelsep=dash,justification=raggedright,singlelinecheck=off}
+
+% Путь к картинкам
+\graphicspath{{images/}}
+
+% Маркер для itemize
+\def\labelitemi{---}
+
+\frenchspacing
+
+\begin{document}
+
+\selectlanguage{russian}
+\fontsize{14}{16}\selectfont
+
+\begin{titlepage}
+	\begin{flushleft}
+		{\Large\textbf{Министерство образования и науки РФ}}
+		
+		\vspace{1cm}
+		
+		{\Large\textbf{Московский государственный технический университет имени Н.Э. Баумана}}
+		
+		\vspace{1cm}
+		
+		{\Large\textbf{Факультет <<Фундаментальные науки>>}}
+		
+		\vspace{1cm}
+		
+		{\Large\textbf{Кафедра <<Теоретическая механика>> имени профессора\\Н.Е. Жуковского}}
+		
+		\vspace{3cm}
+		
+		\textbf{\Large Домашнее задание №\underline{3}}
+		
+		\vspace{0.4cm}
+		
+		\underline{Уравнения Лагранжа 2-го рода}\\[-1mm]
+		
+		{\normalsize \textit{Тема домашнего задания}}
+		
+		\vspace{1cm}
+		
+		\begin{tabular}{@{} p{2cm} p{3cm} @{}}
+			\textbf{Вариант} & \underline{14} \tabularnewline[4mm]
+			\textbf{Группа} & \underline{ФН12-41Б}
+		\end{tabular}
+		
+		\vspace{2cm}
+		
+		\begin{tabular}{@{} p{3.8cm} p{5.4cm} p{2.5cm} p{3cm} @{}}
+			\textbf{Студент} & \underline{Михайлов А.К.} & \hrulefill & \hrulefill \\[-1mm]
+			
+			& {\normalsize \textit{Фамилия, инициалы}} & {\normalsize \textit{подпись}} & {\normalsize \textit{дата}} \tabularnewline[6mm]
+			
+			\textbf{Преподаватель} & \underline{Стихно К.А.} & & \\[-1mm]
+			
+			& {\normalsize \textit{Фамилия, инициалы}} & &
+		\end{tabular}
+		
+		\vfill
+		
+		\textbf{\textit{Москва, 20\underline{26} год}}
+	\end{flushleft}
+\end{titlepage}
+
+\hspace{-1.3cm}
+\begin{minipage}{0.1\textwidth}
+\centering
+\begin{tikzpicture}
+	
+	\coordinate (O) at (0, 0);
+	\coordinate (C) at (-4, -1);
+	
+	\node[above right] at (O) {$O$};
+	\node[above left] at (C) {$C$};
+	\node[] at (-0.03, 3.05) {$1$};
+	\node[] at (2.4, -0.75) {$2$};
+	\node[] at (2.3, 1.15) {$3$};
+	\node[] at (-5.12, 0.45) {$4$};
+	\node[] at (3.4, 2.6) {$\vec{F}$};
+	\node[] at (-3.4, 2.45) {$s$};
+	\node[] at (-2.45, 3.05) {$A$};
+	\node[] at (2.45, 3.05) {$B$};
+	\node[] at (-3.7, -2.5) {$\beta$};
+	\node[] at (-3.65, 0.7) {$\varphi$};
+	\node[] at (-4.1, 1.95) {$O_1$};
+	
+	\draw[-latex, ultra thick] (-3.8, 2.2) -- (-3, 2.2);
+	\draw[-latex, ultra thick] (3, 2.2) -- (3.8, 2.2);
+	\draw[thick] (-3.8, 2.17) -- (-3.8, 2.8);
+	
+	\draw[thick] (0.1, 0) -- (0.25, -0.45);
+	\draw[thick] (-0.1, 0) -- (-0.25, -0.45);
+	\draw[thick] (-0.4, -0.45) -- (0.4, -0.45);
+	\draw[dash dot] (0, 2) -- (0, -2);
+	\draw[dash dot] (-2, 0) -- (2, 0);
+	\draw[thick] (-0.45, 0.894) -- (-3.96, -0.96);
+	\draw[dash dot] (-5, -1) -- (-3, -1);
+	\draw[dash dot] (-4, -2) -- (-4, 0);
+	
+	\draw[thick] (-2.8, 2.5) -- (-2.8, 2.8);
+	\draw[thick] (-2, 2.5) -- (-2, 2.8);
+	\draw[thick] (-2.8, 2.512) -- (-2, 2.512);
+	\fill[pattern=north east lines] (-2.8, 2.512) rectangle (-2, 2.6);
+	
+	\draw[thick] (2.8, 2.5) -- (2.8, 2.8);
+	\draw[thick] (2, 2.5) -- (2, 2.8);
+	\draw[thick] (2.8, 2.512) -- (2, 2.512);
+	\fill[pattern=north east lines] (2.8, 2.512) rectangle (2, 2.6);
+	
+	\draw[thick] (2.8, 1.9) -- (2.8, 1.6);
+	\draw[thick] (2, 1.9) -- (2, 1.6);
+	\draw[thick] (2.8, 1.888) -- (2, 1.888);
+	\fill[pattern=north east lines] (2.8, 1.888) rectangle (2, 1.8);
+	
+	\draw[thick] (-2.8, 1.9) -- (-2.8, 1.6);
+	\draw[thick] (-2, 1.9) -- (-2, 1.6);
+	\draw[thick] (-2.8, 1.888) -- (-2, 1.888);
+	\fill[pattern=north east lines] (-2.8, 1.888) rectangle (-2, 1.8);
+	
+	\draw[thick] (-3, 2) rectangle (3, 2.4);
+	\fill[pattern=north east lines] (-0.4, -0.55) rectangle (0.4, -0.45);
+	\fill[pattern=north east lines] (-3.9, 2.17) rectangle (-3.8, 2.8);
+
+	\draw[thick] (O) circle (0.1);
+	\draw[thick] (O) circle (1);
+	\draw[thick] (O) circle (2);
+	\draw[thick] (C) circle (0.05);
+	\draw[thick] (C) circle (1);
+	\fill (-3.8, 2.2) circle (0.05);
+	
+	\draw[] (-0.7, 2.3) -- (-0.2, 2.8);
+	\draw[] (-0.2, 2.8) -- (0.2, 2.8);
+	
+	\draw[] (1.7, -0.5) -- (2.2, -1);
+	\draw[] (2.2, -1) -- (2.6, -1);
+	
+	\draw[] (-4.3, -0.2) -- (-4.9, 0.2);
+	\draw[] (-4.9, 0.2) -- (-5.3, 0.2);
+	
+	\draw[] (0.7, 0.25) -- (2.1, 0.9);
+	\draw[] (2.1, 0.9) -- (2.5, 0.9);
+	
+	\draw[] (C) -- (-4, 0.7);
+	\draw[] (C) -- (-3.25, 0.5);
+	
+	\draw[-latex, ultra thick] (-4, 0.4) arc[start angle=90, end angle=63, radius=1.4];
+	
+	\coordinate (D1) at (-5.3,-2.8);
+	\coordinate (D2) at (-2.3,-1.3);
+	\coordinate (D3) at (-2.1,-1.3);
+	\coordinate (D4) at (-5.1,-2.8);
+	\draw[thick, fill=white] (D1) -- (D2) -- (D3) -- (D4) -- cycle;
+	\fill[pattern=north east lines] (D1) -- (D2) -- (D3) -- (D4) -- cycle;
+	
+	\draw[thick] (D1) -- (-1.8, -2.8);
+	
+	\draw[to-to, thick] (-4,-2.8) arc[start angle=-20, end angle=40, radius=0.5];
+\end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+\par
+\vspace{5pt}
+\textbf{Условие задачи:}
+В механической системе рейка 1 массой $m_1$ движется в горизонтальных гладких направляющих под действием постоянной силы $F$. Рейка находится в зацеплении с двухступенчатой шестернёй-барабаном радиуса $R$ барабана 3 радиусом $r$. Радиус инерции шестерни-барабана 3 относительно их оси вращения равен $\rho$, $m_2$ - их общая масса.
+\end{minipage}
+\par
+\vspace{5pt}
+\noindent
+	К центру C однородного катка 4 массой $m_4$ прикреплена нерастяжимая нить, которая наматывается на барабан 3. Каток 4 катится со скольжением по неподвижной наклонной плоскости с углом наклона $\beta$. К шестерне 3 приложена пара сил с моментом $L_{OZ} = -\alpha \omega_2$ ($\alpha = \text{const} > 0$, $\omega_2$ --- угловая скорость вращения шестерни 2 с барабаном 3). Массой нити и трением качения пренебречь. Принв за обобщенные координаты $q_1 = s$ и $q_2 = \varphi_2$, составить дифференциальные уравнения движения механический системы и помощью уравнений Лагранжа 2-го рода.
+\section*{Решение}
+\subsection*{1. Анализ механической системы}
+Cистема имеет две степени свободы. Обобщённые координаты:
+\begin{itemize}
+\item $q_1 = s$ --- перемещение рейки 1,
+\item $q_2 = \varphi$ --- угол поворота катка 4.
+\end{itemize}
+\par
+\vspace*{0.6cm}
+Выразим скорости и угловые скороcти всех частей механизма через обобщенные координаты:
+\begin{itemize}
+	\item Рейка 1 (масса $m_1$) движется поступательно: 
+	\begin{equation*}
+		v_1 = \dot{s}
+	\end{equation*}
+	\item Шестерня 2 и барабан 3 вращаются как единое целое. Так как рейка находится в зацеплении с шестерней без проскальзывания, угловая скорость барабана:
+	\begin{equation*}
+	\omega_2 = \frac{v_1}{R} = \frac{\dot{s}}{R}
+	\end{equation*}
+	\newpage
+	\item Нить нерастяжима, поэтому поступательная скорость центра масс $C$ катка 4 равна скорости точек на ободе барабана 3:
+	\begin{equation*}
+	v_C = \omega_2 r = \frac{r}{R} \dot{s}
+	\end{equation*}
+	\item Каток 4 катится со скольжением по неподвижной наклонной плоскости. Его угловая скорость является независимой координатой:
+	\begin{equation*}
+	\omega_4 = \dot{\varphi}
+	\end{equation*}
+\end{itemize}
+\subsection*{2. Вычисление кинетической энергии системы}
+Кинетическая энергия системы $T$ равна сумме кинетических энергий её частей: $T = T_1 + T_{23} + T_4$.
+\begin{itemize}
+	\item Кинетическая энергия поступательно движущейся рейки:
+	$$ T_1 = \frac{m_1 v_1^2}{2} = \frac{m_1 \dot{s}^2}{2} $$
+	\item Кинетическая энергия вращающихся шестерни 2 и барабана 3. Момент инерции этой подсистемы относительно оси вращения равен $I_{Oz} = m_2 \rho^2$ (где $\rho$ --- радиус инерции).
+	$$ T_{23} = \frac{I_{Oz} \omega_2^2}{2} = \frac{m_2 \rho^2}{2} \left( \frac{\dot{s}}{R} \right)^2 = \frac{m_2 \rho^2}{2 R^2} \dot{s}^2 $$
+	\item Каток 4 совершает плоское движение. Примем его за однородный цилиндр радиуса $r_4$, тогда его момент инерции относительно центра масс $I_C = \frac{m_4 r_4^2}{2}$. По теореме Кёнига:
+	$$ T_4 = \frac{m_4 v_C^2}{2} + \frac{I_C \omega_4^2}{2} = \frac{m_4}{2} \left( \frac{r}{R} \dot{s} \right)^2 + \frac{m_4 r_4^2}{4} \dot{\varphi}^2 = \frac{m_4 r^2}{2 R^2} \dot{s}^2 + \frac{m_4 r_4^2}{4} \dot{\varphi}^2 $$
+\end{itemize}
+\par
+Суммируя эти компоненты, получаем полную кинетическую энергию:
+\begin{equation*}
+T = \frac{1}{2} \left( m_1 + \frac{m_2 \rho^2 + m_4 r^2}{R^2} \right) \dot{s}^2 + \frac{m_4 r_4^2}{4} \dot{\varphi}^2
+\end{equation*}
+\par
+Для подстановки в уравнения Лагранжа найдём необходимые частные и полные производные:
+\begin{equation*}
+\frac{\partial T}{\partial s} = 0, \quad \frac{\partial T}{\partial \varphi} = 0
+\end{equation*}
+\newpage
+\begin{equation*}
+\frac{\partial T}{\partial \dot{s}} = \left( m_1 + \frac{m_2 \rho^2 + m_4 r^2}{R^2} \right) \dot{s} \implies \frac{d}{dt} \left( \frac{\partial T}{\partial \dot{s}} \right) = \left( m_1 + \frac{m_2 \rho^2 + m_4 r^2}{R^2} \right) \ddot{s}
+\end{equation*}
+\begin{equation*}
+\frac{\partial T}{\partial \dot{\varphi}} = \frac{m_4 r_4^2}{2} \dot{\varphi} \implies \frac{d}{dt} \left( \frac{\partial T}{\partial \dot{\varphi}} \right) = \frac{m_4 r_4^2}{2} \ddot{\varphi}
+\end{equation*}
+\subsection*{3. Определение обобщённых сил}
+\hspace{2.3cm}
+\begin{tikzpicture}[]
+	
+\coordinate (O) at (0, 0);
+\coordinate (C) at (-4, -1);
+
+\node[above right] at (O) {$O$};
+\node[font=\small, left] at (C) {$C$};
+\node[] at (3.4, 2.6) {$\vec{F}$};
+\node[] at (-3.75, 2.5) {$s$};
+\node[] at (-3.24, 2.55) {$\delta s$};
+\node[] at (-2.45, 3.05) {$A$};
+\node[] at (2.45, 3.05) {$B$};
+\node[] at (-3.7, -2.5) {$\beta$};
+\node[] at (-3.65, 0.7) {$\varphi$};
+\node[] at (-2.9, 0.45) {$\delta\varphi$};
+\node[font=\small] at (1.5, 0.7) {$L_{OZ}$};
+\node[] at (-5.1, -2.3) {$F_{\text{тр}}$};
+\node[] at (-4.6, 1.95) {$O_1$};
+\node[font=\small] at (-4.45, -1.55) {$m_4\vec{g}$};
+\node[font=\small] at (-0.41, -0.63) {$m_2\vec{g}$};
+\node[] at (-0.7, -2.45) {$\omega_2$};
+\node[] at (-5.4, -0.2) {$\omega_4$};
+\node[] at (-4.6, -0.6) {$\vec{N}$};
+
+\draw[-latex, ultra thick] (-4.4, 2.2) -- (-3.5, 2.2);
+\draw[-latex, ultra thick] (-3.5, 2.2) -- (-3, 2.2);
+\draw[-latex, ultra thick] (3, 2.2) -- (3.8, 2.2);
+\draw[thick] (-4.4, 2.17) -- (-4.4, 2.8);
+\draw[thick] (-3.5, 2) -- (-3.5, 2.4);
+
+\draw[thick] (0.1, 0) -- (0.25, -0.45);
+\draw[thick] (-0.1, 0) -- (-0.25, -0.45);
+\draw[thick] (-0.4, -0.45) -- (0.4, -0.45);
+\draw[thick] (-0.45, 0.894) -- (-3.96, -0.96);
+
+\draw[thick] (-2.8, 2.5) -- (-2.8, 2.8);
+\draw[thick] (-2, 2.5) -- (-2, 2.8);
+\draw[thick] (-2.8, 2.512) -- (-2, 2.512);
+\fill[pattern=north east lines] (-2.8, 2.512) rectangle (-2, 2.6);
+
+\draw[thick] (2.8, 2.5) -- (2.8, 2.8);
+\draw[thick] (2, 2.5) -- (2, 2.8);
+\draw[thick] (2.8, 2.512) -- (2, 2.512);
+\fill[pattern=north east lines] (2.8, 2.512) rectangle (2, 2.6);
+
+\draw[thick] (2.8, 1.9) -- (2.8, 1.6);
+\draw[thick] (2, 1.9) -- (2, 1.6);
+\draw[thick] (2.8, 1.888) -- (2, 1.888);
+\fill[pattern=north east lines] (2.8, 1.888) rectangle (2, 1.8);
+
+\draw[thick] (-2.8, 1.9) -- (-2.8, 1.6);
+\draw[thick] (-2, 1.9) -- (-2, 1.6);
+\draw[thick] (-2.8, 1.888) -- (-2, 1.888);
+\fill[pattern=north east lines] (-2.8, 1.888) rectangle (-2, 1.8);
+
+\draw[thick] (-3, 2) rectangle (3, 2.4);
+\fill[pattern=north east lines] (-0.4, -0.55) rectangle (0.4, -0.45);
+\fill[pattern=north east lines] (-4.5, 2.17) rectangle (-4.4, 2.8);
+
+\draw[thick] (O) circle (0.1);
+\draw[thick] (O) circle (1);
+\draw[thick] (O) circle (2);
+\draw[thick] (C) circle (0.05);
+\draw[thick] (C) circle (1);
+\fill (-4.4, 2.2) circle (0.05);
+
+\draw[] (C) -- (-4, 0.7);
+\draw[] (C) -- (-3.25, 0.5);
+\draw[] (C) -- (-2.8, 0.2);
+
+\draw[-latex, ultra thick] (-4, 0.4) arc[start angle=90, end angle=63, radius=1.4];
+\draw[-latex, ultra thick] (-3.38, 0.26) arc[start angle=63, end angle=44, radius=1.4];
+
+\coordinate (D1) at (-5.3,-2.8);
+\coordinate (D2) at (-2.3,-1.3);
+\coordinate (D3) at (-2.1,-1.3);
+\coordinate (D4) at (-5.1,-2.8);
+\draw[thick, fill=white] (D1) -- (D2) -- (D3) -- (D4) -- cycle;
+\fill[pattern=north east lines] (D1) -- (D2) -- (D3) -- (D4) -- cycle;
+
+\draw[thick] (D1) -- (-1.8, -2.8);
+
+\draw[to-to, thick] (-4,-2.8) arc[start angle=-20, end angle=40, radius=0.5];
+
+\draw[-latex, ultra thick] (O) -- (0, -0.9);
+\draw[-latex, ultra thick] (C) -- (-4, -1.9);
+\draw[-latex, ultra thick] (-3.55, -1.9) -- (-4.4, -0.2);
+\draw[-latex, ultra thick] (-3.55, -1.9) -- (-4.7, -2.49);
+
+\draw[-latex, ultra thick] (1.2, 0) arc[start angle=0, end angle=50, radius=1.2];
+\draw[-latex, ultra thick] (0, -2.2) arc[start angle=-90, end angle=-120, radius=2.2];
+\draw[-latex, ultra thick] (-5.2, -1) arc[start angle=-180, end angle=-223, radius=1.2];
+
+\end{tikzpicture}
+
+Вычислим обобщённые силы $Q_s$ и $Q_\varphi$, соответствующие координатам $s$ и $\varphi$. Внешние и внутренние связи, наложенные на систему (реакции опор и направляющих), работы не совершают, так как являются идеальными. Предполагаем, что скорость проскальзывания точки контакта катка направлена вверх по наклонной плоскости, следовательно, вектор силы трения направлен вниз по плоскости.
+\par
+\vspace{0.2cm}
+а) Пусть $\delta s \neq 0$ и $\delta \varphi = 0$. При этом работу совершают постоянная сила $\vec{F}$, момент $L_{OZ}$, сила тяжести катка и сила трения скольжения.
+
+Сумма элементарных работ всех активных сил на этом перемещении:
+$$ 
+\delta A_s = F \delta s + L_{Oz} \delta \varphi_2 - m_4 g \sin\beta \delta s_C - F_{\text{тр}} \delta s_C
+$$
+\par
+Подставим заданный момент сопротивления $L_{Oz} = -\alpha \omega_2 = -\alpha \frac{\dot{s}}{R}$:
+$$
+\delta A_s = F \delta s - \alpha \frac{\dot{s}}{R^2} \delta s - m_4 g \sin\beta \frac{r}{R} \delta s - F_{\text{тр}} \frac{r}{R} \delta s
+$$
+\par
+Отсюда обобщённая сила, соответствующая координате $s$:
+$$
+Q_s = \frac{\delta A_s}{\delta s} = F - \frac{\alpha \dot{s}}{R^2} - \frac{r}{R} m_4 g \sin\beta - \frac{r}{R} F_{\text{тр}}
+$$
+\par
+\vspace{0.2cm}
+б) Теперь пусть $\delta \varphi \neq 0$ и $\delta s = 0$ (центр масс катка неподвижен). На этом перемещении совершает работу только сила трения скольжения, которая создаёт момент относительно центра масс катка:
+$$ 
+\delta A_\varphi = F_{\text{тр}} r_4 \delta \varphi \implies Q_\varphi = \frac{\delta A_\varphi}{\delta \varphi} = F_{\text{тр}} r_4
+$$
+\par
+\vspace{0.2cm}
+Осталось определить силу трения $F_{\text{тр}}$. По условию каток 4 скользит по наклонной плоскости, значит, сила трения $F_{\text{тр}}$ является силой трения скольжения, величина которой пропорциональна нормальной реакции опоры $N$: 
+$$
+F_{\text{тр}} = \mu N
+$$
+\par
+Чтобы найти $N$, запишем теорему о движении центра масс катка 4 в проекции на ось, перпендикулярную наклонной плоскости:
+$$ 
+N - m_4 g \cos\beta = 0 \implies N = m_4 g \cos\beta. 
+$$
+\par
+Следовательно, сила трения скольжения:
+$$
+F_{\text{тр}} = \mu m_4 g \cos\beta. 
+$$
+
+Подставим полученную силу трения в выражения для обобщённых сил:
+$$ Q_s = F - \frac{\alpha}{R^2} \dot{s} - \frac{r}{R} m_4 g (\sin\beta + \mu \cos\beta), $$
+$$ Q_\varphi = \mu m_4 g r_4 \cos\beta. $$
+
+\subsection*{4. Составление уравнений Лагранжа 2-го рода}
+Дифференциальные уравнения движения механической системы в форме уравнений Лагранжа 2-го рода имеют вид:
+$$ 
+\frac{d}{dt} \left( \frac{\partial T}{\partial \dot{q}_i} \right) - \frac{\partial T}{\partial q_i} = Q_i
+$$
+\par
+Подставляя найденные производные кинетической энергии и обобщённые силы, получаем итоговую систему дифференциальных уравнений:
+\begin{equation*}
+	\begin{cases}
+		\left( m_1 + \frac{m_2 \rho^2 + m_4 r^2}{R^2} \right) \ddot{s} = F - \frac{\alpha}{R^2} \dot{s} - \frac{r}{R} m_4 g (\sin \beta + \mu \cos \beta) \\
+		\ddot{\varphi} = \frac{2 \mu g \cos \beta}{r_4}
+	\end{cases}
+\end{equation*}
+
+\end{document}

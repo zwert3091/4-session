@@ -1,0 +1,428 @@
+\documentclass{article}
+\usepackage{physics}
+\usepackage{mathrsfs}
+\usepackage{cmap}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{indentfirst, setspace}
+\usepackage{amsfonts,amssymb}
+\usepackage{amsmath,amsthm}
+\setlength{\parindent}{0.75cm}
+
+% Кодировки и языки
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+
+% Математика
+\usepackage{amsmath,amssymb,amsfonts}
+
+% Графика и TikZ
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{arrows.meta, shapes, positioning, decorations.pathmorphing, patterns, decorations.pathreplacing}
+
+% Оформление оглавления, подписей, шрифта
+\usepackage{tocloft}
+\usepackage{caption}
+\usepackage{tempora}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{indentfirst}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{tabularx}
+\usepackage{wrapfig}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{float}
+
+% Настройки списков
+\setlist{nosep}
+\setlist[itemize]{leftmargin=1.25cm, itemindent=0.65cm}
+\setlist[enumerate]{leftmargin=1.25cm, itemindent=0.55cm}
+
+\usepackage[
+	a4paper,
+	left=30mm,
+	right=15mm,
+	top=20mm,
+	bottom=20mm,
+	]{geometry}
+	
+% Параметры страницы
+\geometry{left=30mm,right=10mm,top=20mm,bottom=20mm}
+\onehalfspacing
+\linespread{1.3}
+\parindent=1.25cm
+
+% Нумерация и вид списков
+\renewcommand{\theenumi}{\arabic{enumi}}
+\renewcommand{\labelenumi}{\arabic{enumi})}
+\renewcommand{\theenumii}{.\arabic{enumii}}
+\renewcommand{\labelenumii}{\asbuk{enumii})}
+\renewcommand{\theenumiii}{.\arabic{enumiii}}
+\renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.}
+
+% Подписи к рисункам и таблицам
+\addto\captionsrussian{\renewcommand{\figurename}{Рисунок}}
+\DeclareCaptionLabelSeparator{dash}{~---~}
+\captionsetup{labelsep=dash}
+\captionsetup[figure]{justification=centering,labelsep=dash}
+\captionsetup[table]{labelsep=dash,justification=raggedright,singlelinecheck=off}
+
+% Путь к картинкам
+\graphicspath{{images/}}
+
+% Маркер для itemize
+\def\labelitemi{---}
+
+\frenchspacing
+
+\begin{document}
+
+\selectlanguage{russian}
+\fontsize{14}{16}\selectfont
+
+\begin{titlepage}
+	\begin{flushleft}
+		{\Large\textbf{Министерство образования и науки РФ}}
+		
+		\vspace{1cm}
+		
+		{\Large\textbf{Московский государственный технический университет имени Н.Э. Баумана}}
+		
+		\vspace{1cm}
+		
+		{\Large\textbf{Факультет <<Фундаментальные науки>>}}
+		
+		\vspace{1cm}
+		
+		{\Large\textbf{Кафедра <<Теоретическая механика>> имени профессора\\Н.Е. Жуковского}}
+		
+		\vspace{3cm}
+		
+		\textbf{\Large Домашнее задание №\underline{1}}
+		
+		\vspace{0.4cm}
+		
+		\underline{Динамика материальной точки}\\[-1mm]
+		
+		{\normalsize \textit{Тема домашнего задания}}
+		
+		\vspace{1cm}
+		
+		\begin{tabular}{@{} p{2cm} p{3cm} @{}}
+			\textbf{Вариант} & \underline{14} \tabularnewline[4mm]
+			\textbf{Группа} & \underline{ФН12-41Б}
+		\end{tabular}
+		
+		\vspace{2cm}
+		
+		\begin{tabular}{@{} p{3.8cm} p{5.4cm} p{2.5cm} p{3cm} @{}}
+			\textbf{Студент} & \underline{Михайлов А.К.} & \hrulefill & \hrulefill \\[-1mm]
+			
+			& {\normalsize \textit{Фамилия, инициалы}} & {\normalsize \textit{подпись}} & {\normalsize \textit{дата}} \tabularnewline[6mm]
+			
+			\textbf{Преподаватель} & \underline{Стихно К.А.} & & \\[-1mm]
+			
+			& {\normalsize \textit{Фамилия, инициалы}} & &
+		\end{tabular}
+		
+		\vfill
+		
+		\textbf{\textit{Москва, 20\underline{26} год}}
+	\end{flushleft}
+\end{titlepage}
+
+\hspace{-1.1cm}
+\begin{minipage}{0.1\textwidth}
+\centering
+\begin{tikzpicture}
+	
+	\coordinate (O) at (0,2);
+	\coordinate (M0) at (2,-1.8);
+	\coordinate (M) at (2.8,-1.8);
+	\coordinate (A) at (-2,-1.6);
+	
+	\node[left] at (O) {$O(z)$};
+	\node[above left, yshift=3pt, xshift=4pt] at (M0) {$M_0$};
+	\node[above left, yshift=5pt, xshift=6pt] at (M) {$M$};
+	\node[left] at (A) {$A$};
+	\node[above] at (-1, -2.7) {$L$};
+	\node[above] at (1, -2.7) {$L$};
+	\node[above] at (-0.6, 0.8) {$\omega$};
+	
+	\draw[thick] (0,2) circle (0.1);
+	\draw[thick] (M0) circle (0.17);
+	\draw[thick] (-0.1, 2) -- (-0.3, 2.5);
+	\draw[thick] (0.1, 2) -- (0.3, 2.5);
+	\draw[thick] (-0.5, 2.5) -- (0.5, 2.5);
+	
+	\draw[thick] (-2, -2) -- (-2, -1.6);
+	\draw[thick] (-2, -1.6) -- (3, -1.6);
+	\draw[thick] (-2, -2) -- (3, -2);
+	
+	\draw[thick] (-0.1, 2) -- (-0.1, -1.6);
+	\draw[thick] (0.1, 2) -- (0.1, -1.6);
+	
+	\draw (-2, -1.6) -- (-2, -2.7);
+	\draw (2, -1.6) -- (2, -2.7);
+	
+	\draw[dash dot] (0, 1.9) -- (0, -2.7);
+	
+	\draw[latex-latex] (-1.9, -2.6) -- (-0.1, -2.6);
+	\draw[latex-latex] (0.1, -2.6) -- (1.9, -2.6);
+	
+	\draw[-to, thick] (0.4, 1.5) arc[start angle=-30, end angle=-150, radius=0.5];
+	
+	\fill (M) circle (5.2pt);
+	
+	\draw[decorate, decoration={coil, aspect=0.5, segment length=2mm, amplitude=1.5mm}] 
+	(-2, -1.8) -- (1.82, -1.8);
+	
+	\fill[pattern=north east lines] (-0.5, 2.5) rectangle (0.5, 2.66);
+	
+\end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}{0.6\textwidth}
+\par
+\vspace{8pt}
+\textbf{Условие задачи:}
+Тело массой $m = 1{,}0 кг$ движется внутри гладкой трубки,
+вращающейся с постоянной угловой скоростью $\omega = 10{,}0$ рад/с вокруг вертикальной оси $O$, отстоящей от трубки на некотором расстоянии. Тело связано с концом пружины $AM$. Жесткость пружины $c = 500 \,\text{Н/м}$, её длина в недеформированном состоянии $2L = 20{,}0 \, \text{см}$.
+\end{minipage}
+\par
+\vspace{5pt}
+\noindent
+Полагая, что движение тела началось из состояния относительного покоя при недеформированной пружине, определить его максимальное отклонение от начального положения $M_0$.
+\section*{Решение}
+
+Рассмотрим движение тела массой $m$ внутри гладкой трубки. По условию задачи в начальный момент времени $t = 0$ тело находится в точке $M_0$, где пружина не деформирована. Введём подвижную систему координат $Axyz$. Cвяжем ее с трубкой и поместим центр в точку $A$. Полученная система отсчета \textbf{неинерциальная}. Обозначим положение тела в текущий момент времени за $M$. Примем отклонение тела от начального положения $M_0$ за $x$. Таким образом, требуется определить $x_\text{max}$. Выпишем силы, действующие на тело, и отобразим их на расчетной схеме:
+	
+	\begin{enumerate}
+		\item cила упругости пружины:
+		\[
+		{F}_{\text{упр}} = c\,\Delta x
+		\]
+		\item сила инерции:
+		\[
+		{\Phi}_{\text{e}} = m\omega^2 |OM|
+		\]
+		\item cила Кориолиса:
+		\[
+		{\Phi}_{\text{к}} = 2m\,[{v}_{\text{r}} \times {\omega}]
+		\]
+		\item cила тяжести:
+		\[
+		{F}_g = mg
+		\]
+		\item составляющие нормальной реакции трубки:
+		\[
+		N_y \quad \text{и} \quad N_z
+		\]
+	\end{enumerate}
+	
+\begin{tikzpicture}
+	
+	\coordinate (A) at (-3,0);
+	\node[below left] at (A) {$A$};
+	\fill (A) circle (2pt);
+	
+	\coordinate (O) at (1, 4);
+	\node[above left, xshift=2pt, yshift=-5pt] at (O) {$O(z)$};
+	\fill (O) circle (2pt);
+	
+	\coordinate (O') at (1, 0);
+	\node[above left, xshift=2pt] at (O') {$O'$};
+	\fill (O') circle (2pt);
+	
+	\draw[thick] (1, 0.3) -- (1.3, 0.3) -- (1.3, 0);
+	
+	\coordinate (M0) at (5, 0);
+	\node[above, yshift=-2pt] at (M0) {$M_0$};
+	\fill (M0) circle (2pt);
+	
+	\coordinate (M) at (6, 0);
+	\node[above right] at (M) {$M$};
+	\fill (M) circle (2pt);
+	
+	\draw[-latex, thick] (-4,0) -- (8,0) node[below right, xshift=-6pt] {$x$}; %L за 4
+	\draw[-latex, thick] (-3,-2) -- (-3,5) node[left] {$y$};
+	
+	\draw[thick] (1, 0) -- (O);
+	\draw[thick, dashed] (M) -- (O);
+	
+	\draw[-latex, ultra thick] (M) -- ++(-39:2)
+	node[right] {$\vec{\Phi}_{\text{e}}$};
+	\draw[-latex, ultra thick] (M) -- (6, 3)
+	node[right] {$\vec{\Phi}_{\text{к}}$};
+	\draw[-latex, ultra thick] (M) -- (4, 0)
+	node[above, xshift=0.5pt, yshift=-2pt] {$\vec{F}_{\text{упр}}$};
+	\draw[-latex, ultra thick] (M) -- (6, 2)
+	node[right] {$\vec{N_y}$};
+	
+	\draw [decorate, decoration={brace, mirror, amplitude=10pt}, thick]
+	(-3,0) -- (1, 0) 
+	node[midway, below=7pt] {$L$};
+	
+	\draw [decorate, decoration={brace, mirror, amplitude=10pt}, thick]
+	(1,0) -- (5, 0) 
+	node[midway, below=7pt] {$L$};
+	
+	\draw [decorate, decoration={brace, mirror, amplitude=10pt}, thick]
+	(5,0) -- (6, 0) 
+	node[midway, below=7pt] {$x$};
+	
+	\coordinate (Z) at (-3.5, 0.7);
+	\draw[thick] (Z) circle (4pt);
+	\fill (Z) circle (1pt);
+	\node[above left] at (Z) {$z$};
+	\draw[decorate, decoration={snake, amplitude=0.8pt, segment length=12pt}, thick] 
+	($(Z)!4pt!(A)$) -- (A);
+	
+	\coordinate (N) at (6.4, 1);
+	\draw[thick] (N) circle (4pt);
+	\fill (N) circle (1pt);
+	\node[right, yshift=5pt] at (N) {$\vec{N_z}$};
+	\draw[decorate, decoration={snake, amplitude=0.8pt, segment length=12pt}, thick] 
+	($(N)!4pt!(M)$) -- (M);
+	
+    \coordinate (G) at (5.4, 1.3);
+	\draw[thick] (G) circle (4pt);
+	\draw[thick] ($(G) + (45:2.8pt)$) -- ($(G) + (225:2.8pt)$);
+	\draw[thick] ($(G) + (135:2.8pt)$) -- ($(G) + (315:2.8pt)$);
+	\node[left, yshift=5pt] at (G) {$m\vec{g}$};
+	\draw[decorate, decoration={snake, amplitude=0.8pt, segment length=12pt}, thick] 
+	($(G)!4pt!(M)$) -- (M);
+	
+	\draw[thick] (1, 3.1) arc[start angle=-110, end angle=-11, radius=0.5]
+	node[below, yshift=-6pt, xshift=-3pt] {$\varphi$};
+	
+	\draw[-to, thick] (1.4, 2.5) arc[start angle=-30, end angle=-150, radius=0.5]
+	node[above] at (0.7, 1.8) {$\omega$};
+	
+\end{tikzpicture}
+\par
+Запишем уравнение Ньютона в векторной форме:
+\begin{equation}
+	m\vec{a} = m\vec{g} + \vec{\Phi}_{\text{к}} + \vec{\Phi}_{\text{c}} + \vec{N_y} + \vec{N_z} + \vec{F}_{\text{упр}}
+\end{equation}
+\par
+Спроецируем (1) на ось абсцисс:
+\begin{equation}
+	m{a_r} = -cx + m\omega^{2}|OM|\sin\varphi
+\end{equation}
+\par
+Из прямоугольного $\triangle OO'M$ найдем $|OM|$:
+\begin{equation*}
+	\sin\varphi = \frac{|O'M|}{|OM|} \implies |OM| = \frac{L + x}{\sin\varphi}
+\end{equation*}
+\par
+Подставим $|OM|$ в (2):
+\begin{equation*}
+	m{a_r} = -cx + m\omega^{2}\frac{L + x}{\sin\varphi}\sin\varphi
+\end{equation*}
+\begin{equation*}
+	m{a_r} = -cx + m\omega^{2}(L + x)
+\end{equation*}
+\begin{equation*}
+		m\ddot{x} + cx - m\omega^{2}L - m\omega^{2} x = 0
+\end{equation*}
+\par
+Получим линейное неоднородное дифференциальное уравнение с постоянными коэффициентами:
+\begin{equation}
+	m\ddot{x} + x(c - m\omega^{2}) - m\omega^{2}L = 0
+\end{equation}
+\par
+Для (3) составим характеристическое уравнение и решим его:
+\begin{equation*}
+	m\lambda^{2} + (c - m\omega^{2}) = 0
+\end{equation*}
+\begin{equation*}
+	\lambda^2 = -\frac{c - m\omega^2}{m}
+\end{equation*}
+
+Так как \(c - m\omega^2 > 0\), вводим обозначение:
+\begin{equation*}
+	k = \sqrt{\frac{c - m\omega^2}{m}} > 0
+\end{equation*}
+
+Тогда:
+\begin{equation*}
+	\lambda^2 = -k^2 \quad \Rightarrow \quad \lambda_{1,2} = \pm ik
+\end{equation*}
+
+Решение однородного уравнения принимает следующий вид:
+\begin{equation}
+	x_{\text{oo}}(t) = C_1 \cos(kt) + C_2 \sin(kt)
+\end{equation}
+
+Частное решение неоднородного уравнения ищем в виде константы $x_{\text{чн}} = A$:
+\begin{equation*}
+	0 + (c - m\omega^2)A - m\omega^2 L = 0
+\end{equation*}
+\begin{equation*}
+	x_{\text{чн}} = A = \frac{m\omega^2 L}{c - m\omega^2}
+\end{equation*}
+
+Получив общее решение однородного (4) и частное решение неоднородного (5), можем записать общее решение уравнения (3) как сумму найденных решений:
+\begin{equation}
+	\boxed{x(t) = C_1 \cos(kt) + C_2 \sin(kt) + \frac{m\omega^2 L}{c - m\omega^2}} \, ,
+\end{equation}
+
+где \(\displaystyle k = \sqrt{\frac{c - m\omega^2}{m}}\). \par
+\vspace*{2pt}
+Теперь, чтобы найти константы $C_1$ и $C_2$, подставим начальные условия: $t = 0, x = 0, \dot{x} = 0$. Для начала найдем $C_1$:
+\begin{equation*}
+	x(0) = C_1 \cos(0) + C_2 \sin(0) + \frac{m\omega^2 L}{c - m\omega^2}
+\end{equation*}
+\begin{equation*}
+	x(0) = C_1 + \frac{m\omega^2 L}{c - m\omega^2} = 0
+\end{equation*}
+\begin{equation*}
+	C_1 = -\frac{m\omega^2 L}{c - m\omega^2}
+\end{equation*}
+\par
+Далее вычислим производную уравнения (5) и найдем $C_2$:
+\begin{equation*}
+	\dot{x}(t) = -C_1 k \sin(k t) + C_2 k \cos(k t)
+\end{equation*}
+\begin{equation*}
+	\dot{x}(0) = -C_1 k \sin(0) + C_2 k \cos(0)
+\end{equation*}
+\begin{equation*}
+	\dot{x}(0) = C_2 k = 0
+\end{equation*}
+\begin{equation*}
+	 C_2 = 0
+\end{equation*}
+\par
+Подставив найденные ранее $C_1$ и $C_2$, получаем итоговое решение:
+\begin{equation*}
+	\boxed{x(t) = -\frac{m\omega^2 L}{c - m\omega^2} \cos(kt) + \frac{m\omega^2 L}{c - m\omega^2}}
+\end{equation*}
+\par
+\begin{equation*}
+	x(t) = \frac{m\omega^2 L}{c - m\omega^2} (1 - \cos(\sqrt{\frac{c - m\omega^2}{m}}t))
+\end{equation*}
+\par
+Подставим значения:
+\begin{equation*}
+	x(t) = \frac{10^2 \cdot 0,1}{500 - 10^2} (1 - \cos(\sqrt{500 - 10^2}t))
+\end{equation*}
+\begin{equation}
+	x(t) = \frac{1}{40} - \frac{1}{40}\cos(20t)
+\end{equation}
+\par
+Очевидно, что функция (6) достигает своего максимума при $\cos(20t) = -1$, то есть в момент времени $t = \frac{\pi}{20} \approx 0,1571	 \, \text{сек}$. Теперь определим $x_{max}$:
+\begin{equation*}
+	x_{max} = x(\frac{\pi}{20}) = \frac{1}{40} + \frac{1}{40} = 0,05 \, \text{м}
+\end{equation*}
+\hspace{13cm}
+\textbf{Ответ: 0,05 м}
+\end{document}
